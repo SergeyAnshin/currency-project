@@ -1,9 +1,11 @@
 package org.good.job.currency.project.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.good.job.currency.project.dto.Foreachable;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
+import org.good.job.currency.project.service.ArrayResolver;
 import org.good.job.currency.project.service.ExternalApiCaller;
 import org.good.job.currency.project.service.ExternalApiDtoMapper;
 import org.good.job.currency.project.service.ExternalApiUrlService;
@@ -23,8 +25,9 @@ public class RateService {
     private final ExternalApiUrlService urlService;
     private final RateMapper rateMapper;
     private final ExternalApiDtoMapper externalApiDtoMapper;
+    private final ArrayResolver rateArrayResolver;
 
-    //TODO обработка rate list
+    //TODO Отрефакторить
     public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName,
                                                                   Currency currencyCode,
                                                                   LocalDate date) {
@@ -35,6 +38,9 @@ public class RateService {
 
         var dtoClass = externalApiName.getExternalApiRateProperty().getRateProperty().getDtoClass();
         var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
+        if (externalApiDto instanceof Foreachable) {
+            externalApiDto = rateArrayResolver.resolve(externalApiDto, param);
+        }
         return rateMapper.externalApiRateDtoToRate(externalApiDto);
     }
 
