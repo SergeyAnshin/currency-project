@@ -1,5 +1,7 @@
 package org.good.job.currency.project.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
@@ -28,7 +30,7 @@ public class RateController {
     @GetMapping
     public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam ExternalApiName externalApiName,
                                                                         @RequestParam Currency currency,
-                                                                        @RequestParam LocalDate date) {
+                                                                        @RequestParam @Valid @PastOrPresent LocalDate date) {
         var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(externalApiName, currency, date);
         return ResponseEntity.ok(rate);
     }
