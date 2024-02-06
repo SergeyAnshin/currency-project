@@ -13,20 +13,21 @@ import java.util.Objects;
 @Setter
 @ToString
 public class GeneralRate {
-
-    private double currencyRate;
+    private double buyRate;
+    private double sellRate;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GeneralRate that = (GeneralRate) o;
-        return Double.compare(currencyRate, that.currencyRate) == 0;
+        return Double.compare(buyRate, that.buyRate) == 0
+                && Double.compare(sellRate, that.sellRate) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(currencyRate);
+        return Objects.hash(buyRate, sellRate);
     }
 
 }
