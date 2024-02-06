@@ -26,4 +26,14 @@ public class AlfaBankRate extends GeneralExternalApiRate {
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate date;
 
+    @Override
+    public String getCurrencyCode() {
+        return sellIso;
+    }
+
+    @Override
+    public LocalDate getDateOfRate() {
+        return date;
+    }
+
 }

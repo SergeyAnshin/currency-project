@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class BelarusBankRateDto extends GeneralExternalApiRate {
+public class BelarusBankRate extends GeneralExternalApiRate {
 
     @JsonAlias({ "kurs_date_time" })
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -79,5 +80,16 @@ public class BelarusBankRateDto extends GeneralExternalApiRate {
 
     @JsonAlias({ "CNYCARD_RUBCARD_out" })
     private double sellConversionCnyRub;
+
+    //TODO Что-то придумать
+    @Override
+    public String getCurrencyCode() {
+        return "USD";
+    }
+
+    @Override
+    public LocalDate getDateOfRate() {
+        return LocalDate.from(date);
+    }
 
 }

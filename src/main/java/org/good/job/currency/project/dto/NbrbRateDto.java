@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -31,6 +32,16 @@ public class NbrbRateDto extends GeneralExternalApiRate {
     private String currencyName;
 
     @JsonAlias({ "Cur_OfficialRate" })
-    private double currencyRate;
+    private double sellRate;
+
+    @Override
+    public String getCurrencyCode() {
+        return currencyAbbreviation;
+    }
+
+    @Override
+    public LocalDate getDateOfRate() {
+        return LocalDate.from(date);
+    }
 
 }

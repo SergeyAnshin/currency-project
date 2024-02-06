@@ -12,9 +12,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-
-public class AlfaBankRateDtoList extends GeneralExternalApiRate {
+public class AlfaBankRateList implements Foreachable<AlfaBankRate> {
 
     List<AlfaBankRate> rates;
+
+    @Override
+    public List<AlfaBankRate> getListDto() {
+        return rates;
+    }
 
 }
