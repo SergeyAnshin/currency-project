@@ -1,11 +1,11 @@
 package org.good.job.currency.project.controller;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
-import org.good.job.currency.project.service.impl.RateService;
+import org.good.job.currency.project.service.impl.RateServiceImpl;
+import org.good.job.currency.project.service.validation.annotation.SupportedCurrencyByExternalApi;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +25,14 @@ import java.util.Currency;
 @RequestMapping("/rate")
 public class RateController {
 
-    private final RateService rateService;
+    private final RateServiceImpl rateServiceImpl;
 
     @GetMapping
+    @SupportedCurrencyByExternalApi
     public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam ExternalApiName externalApiName,
                                                                         @RequestParam Currency currency,
-                                                                        @RequestParam @Valid @PastOrPresent LocalDate date) {
-        var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(externalApiName, currency, date);
+                                                                        @RequestParam @PastOrPresent LocalDate date) {
+        var rate = rateServiceImpl.getRateByExternalApiNameAndCurrencyAndDate(externalApiName, currency, date);
         return ResponseEntity.ok(rate);
     }
 
