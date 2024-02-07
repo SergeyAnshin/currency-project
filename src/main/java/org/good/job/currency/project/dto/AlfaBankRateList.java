@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class AlfaBankRateList implements Foreachable<AlfaBankRate> {
+public class AlfaBankRateList implements ArrayRate<AlfaBankRate> {
 
     List<AlfaBankRate> rates;
 

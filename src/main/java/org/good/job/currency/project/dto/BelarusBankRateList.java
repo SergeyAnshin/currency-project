@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @JsonDeserialize(using = BelarusBankRateListDeserializer.class)
-public class BelarusBankRateList implements Foreachable<BelarusBankRate> {
+public class BelarusBankRateList implements ArrayRate<BelarusBankRate> {
 
     List<BelarusBankRate> rates;
 

@@ -84,7 +84,7 @@ public class BelarusBankRate extends GeneralExternalApiRate {
     //TODO Что-то придумать
     @Override
     public String getCurrencyCode() {
-        return "USD";
+        throw new UnsupportedOperationException();
     }
 
     @Override

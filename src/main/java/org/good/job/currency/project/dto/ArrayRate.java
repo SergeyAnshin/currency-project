@@ -3,7 +3,7 @@ package org.good.job.currency.project.dto;
 import java.util.List;
 
 
-public interface Foreachable<T> {
+public interface ArrayRate<T extends GeneralExternalApiRate> {
 
     List<T> getListDto();
 
