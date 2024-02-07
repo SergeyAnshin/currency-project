@@ -5,10 +5,7 @@ import org.good.job.currency.project.dto.Foreachable;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
-import org.good.job.currency.project.service.ArrayResolver;
-import org.good.job.currency.project.service.ExternalApiCaller;
-import org.good.job.currency.project.service.ExternalApiDtoMapper;
-import org.good.job.currency.project.service.ExternalApiUrlService;
+import org.good.job.currency.project.service.*;
 import org.good.job.currency.project.service.mapper.RateMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +16,7 @@ import java.util.Currency;
 @RequiredArgsConstructor
 
 @Service
-public class RateService {
+public class RateServiceImpl implements RateService {
 
     private final ExternalApiCaller externalApiCaller;
     private final ExternalApiUrlService urlService;
@@ -28,6 +25,7 @@ public class RateService {
     private final ArrayResolver rateArrayResolver;
 
     //TODO Отрефакторить
+    @Override
     public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName,
                                                                   Currency currencyCode,
                                                                   LocalDate date) {
