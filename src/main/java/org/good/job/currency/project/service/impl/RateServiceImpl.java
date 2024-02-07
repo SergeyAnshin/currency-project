@@ -1,7 +1,6 @@
 package org.good.job.currency.project.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.good.job.currency.project.dto.Foreachable;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
@@ -22,9 +21,8 @@ public class RateServiceImpl implements RateService {
     private final ExternalApiUrlService urlService;
     private final RateMapper rateMapper;
     private final ExternalApiDtoMapper externalApiDtoMapper;
-    private final ArrayResolver rateArrayResolver;
+    private final ArrayResolver rateArrayByCurrencyAndDateResolver;
 
-    //TODO Отрефакторить
     @Override
     public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName,
                                                                   Currency currencyCode,
@@ -36,10 +34,8 @@ public class RateServiceImpl implements RateService {
 
         var dtoClass = externalApiName.getExternalApiRateProperty().getRateProperty().getDtoClass();
         var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
-        if (externalApiDto instanceof Foreachable) {
-            externalApiDto = rateArrayResolver.resolve(externalApiDto, param);
-        }
-        return rateMapper.externalApiRateDtoToRate(externalApiDto);
+        externalApiDto = rateArrayByCurrencyAndDateResolver.resolve(externalApiDto, param);
+        return rateMapper.externalApiRateDtoToRate(externalApiDto, param);
     }
 
 }
