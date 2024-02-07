@@ -13,6 +13,6 @@ public interface RateService {
     GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName, Currency currencyCode,
                                                            LocalDate date);
 
-    List<Currency> getAvailableCurrenciesByExternalApi();
+    List<Currency> getAvailableCurrenciesByExternalApi(ExternalApiName externalApiName);
 
 }
