@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class AlfaBankRate extends GeneralExternalApiRate {
+public class AlfaBankRate extends GeneralExternalApiRate implements Checkable {
 
     private double sellRate;
     private String sellIso;
@@ -27,8 +27,13 @@ public class AlfaBankRate extends GeneralExternalApiRate {
     private LocalDate date;
 
     @Override
-    public String getCurrencyCode() {
+    public String getSellCurrencyCode() {
         return sellIso;
+    }
+
+    @Override
+    public String getBuyCurrencyCode() {
+        return buyIso;
     }
 
     @Override

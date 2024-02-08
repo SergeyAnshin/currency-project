@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class NbrbRateDto extends GeneralExternalApiRate {
+public class NbrbRateDto extends GeneralExternalApiRate implements Checkable {
 
     @JsonAlias({ "Cur_ID" })
     private long currencyId;
@@ -35,8 +35,13 @@ public class NbrbRateDto extends GeneralExternalApiRate {
     private double sellRate;
 
     @Override
-    public String getCurrencyCode() {
+    public String getSellCurrencyCode() {
         return currencyAbbreviation;
+    }
+
+    @Override
+    public String getBuyCurrencyCode() {
+        return "BYN";
     }
 
     @Override

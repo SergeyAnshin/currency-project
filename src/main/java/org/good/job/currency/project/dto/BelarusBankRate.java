@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -80,16 +79,5 @@ public class BelarusBankRate extends GeneralExternalApiRate {
 
     @JsonAlias({ "CNYCARD_RUBCARD_out" })
     private double sellConversionCnyRub;
-
-    //TODO Что-то придумать
-    @Override
-    public String getCurrencyCode() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public LocalDate getDateOfRate() {
-        return LocalDate.from(date);
-    }
 
 }

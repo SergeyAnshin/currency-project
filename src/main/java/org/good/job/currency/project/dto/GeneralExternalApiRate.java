@@ -1,9 +1,10 @@
 package org.good.job.currency.project.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDate;
 
 
 @AllArgsConstructor
@@ -12,8 +13,4 @@ import java.time.LocalDate;
 @Setter
 @ToString
 public abstract class GeneralExternalApiRate extends ExternalApiDto {
-
-    public abstract String getCurrencyCode();
-    public abstract LocalDate getDateOfRate();
-
 }
