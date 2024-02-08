@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dto.ArrayRate;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.service.ArrayResolver;
+import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayDeque;
@@ -21,20 +22,16 @@ public class RateArrayByCurrencyAndDateResolver implements ArrayResolver {
             var ratesMatchingSpecifiedParameters = new ArrayDeque<>();
             for (var rate : arrayRate.getListDto()) {
                 var rateChecker = rateCheckFactory.getRateCheckerByRateDtoClass(rate.getClass());
-                if (rateChecker.isMatchingByCurrencyAndSpecifiedDate(rate, externalApiUrl)) {
+                if (rateChecker.isRateMatchParameters(rate, externalApiUrl)) {
                     ratesMatchingSpecifiedParameters.addFirst(rate);
-                    break;
-                } else if (rateChecker.isMatchingByCurrencyAndCurrentDate(rate, externalApiUrl)) {
-                    ratesMatchingSpecifiedParameters.addLast(rate);
                 }
             }
             if (ratesMatchingSpecifiedParameters.isEmpty()) {
-                throw new RuntimeException();
+                throw new RateNotFoundException();
             }
             return ratesMatchingSpecifiedParameters.getFirst();
         }
         return externalApiRateDto;
     }
-
 
 }
