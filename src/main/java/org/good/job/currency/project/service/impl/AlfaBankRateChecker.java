@@ -1,13 +1,14 @@
 package org.good.job.currency.project.service.impl;
 
 import org.good.job.currency.project.dto.AlfaBankRate;
+import org.good.job.currency.project.dto.Checkable;
 import org.good.job.currency.project.dto.GeneralExternalApiRate;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.service.RateChecker;
 import org.good.job.currency.project.service.annotations.AssignedClass;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.Currency;
 
 
 @AssignedClass(AlfaBankRate.class)
@@ -16,15 +17,18 @@ import java.time.LocalDate;
 public class AlfaBankRateChecker implements RateChecker {
 
     @Override
-    public boolean isMatchingByCurrencyAndSpecifiedDate(GeneralExternalApiRate rate, ExternalApiUrl externalApiUrl) {
-        return rate.getCurrencyCode().equals(externalApiUrl.getCurrency().getCurrencyCode()) && rate.getDateOfRate()
-                .equals(externalApiUrl.getDate());
+    public boolean isRateMatchParameters(GeneralExternalApiRate externalApiRate, ExternalApiUrl externalApiUrl) {
+        if (externalApiRate instanceof Checkable rate) {
+            return isMatchingByCurrency(rate, externalApiUrl.getCurrency())
+                    && isMatchingByDate(rate, externalApiUrl.getDate())
+                    && isMatchingUserLocalCurrency(rate, rate.getLocalCurrency());
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
-    @Override
-    public boolean isMatchingByCurrencyAndCurrentDate(GeneralExternalApiRate rate, ExternalApiUrl externalApiUrl) {
-        return rate.getCurrencyCode().equals(externalApiUrl.getCurrency().getCurrencyCode()) && rate.getDateOfRate()
-                .equals(LocalDate.now());
+    private boolean isMatchingUserLocalCurrency(Checkable rate, Currency userLocaleCurrency) {
+        return rate.getBuyCurrencyCode().equals(userLocaleCurrency.getCurrencyCode());
     }
 
 }

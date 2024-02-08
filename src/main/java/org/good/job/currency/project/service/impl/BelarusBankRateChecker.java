@@ -21,16 +21,19 @@ public class BelarusBankRateChecker implements RateChecker {
     public static final String SELL_RATE_PREFIX = "SELL";
 
     @Override
-    public boolean isMatchingByCurrencyAndSpecifiedDate(GeneralExternalApiRate rate, ExternalApiUrl externalApiUrl) {
-        return rate.getDateOfRate().equals(externalApiUrl.getDate()) && contain(rate, externalApiUrl);
+    public boolean isRateMatchParameters(GeneralExternalApiRate externalApiRate, ExternalApiUrl externalApiUrl) {
+        if (externalApiRate instanceof BelarusBankRate rate) {
+            return isMatchingByCurrencyAndSpecifiedDate(rate, externalApiUrl);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
-    @Override
-    public boolean isMatchingByCurrencyAndCurrentDate(GeneralExternalApiRate rate, ExternalApiUrl externalApiUrl) {
-        return rate.getDateOfRate().equals(LocalDate.now()) && contain(rate, externalApiUrl);
+    private boolean isMatchingByCurrencyAndSpecifiedDate(BelarusBankRate rate, ExternalApiUrl externalApiUrl) {
+        return containCurrencyInFields(rate, externalApiUrl) && LocalDate.from(rate.getDate()).equals(externalApiUrl.getDate());
     }
 
-    private boolean contain(GeneralExternalApiRate rate, ExternalApiUrl externalApiUrl) {
+    private boolean containCurrencyInFields(BelarusBankRate rate, ExternalApiUrl externalApiUrl) {
         Field[] declaredFields = rate.getClass().getDeclaredFields();
         String currencyCode = externalApiUrl.getCurrency().getCurrencyCode();
         return Arrays.stream(declaredFields)
