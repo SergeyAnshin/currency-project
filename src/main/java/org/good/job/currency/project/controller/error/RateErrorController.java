@@ -1,6 +1,7 @@
 package org.good.job.currency.project.controller.error;
 
 import jakarta.validation.ConstraintViolationException;
+import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -37,6 +38,11 @@ public class RateErrorController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RestClientException.class)
     public ResponseEntity<Object> handleRestClientException(RestClientException ex) {
         return ResponseEntity.internalServerError().build();
+    }
+
+    @ExceptionHandler(RateNotFoundException.class)
+    public ResponseEntity<Object> handleRateNotFoundException(RateNotFoundException ex) {
+        return ResponseEntity.notFound().build();
     }
 
 }
