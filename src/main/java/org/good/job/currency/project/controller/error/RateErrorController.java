@@ -1,6 +1,7 @@
 package org.good.job.currency.project.controller.error;
 
 import jakarta.validation.ConstraintViolationException;
+import org.good.job.currency.project.service.exception.ExternalApiNameNotExistsException;
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,9 @@ public class RateErrorController extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
                                                         HttpStatusCode status, WebRequest request) {
+        if (ex.getRootCause() instanceof ExternalApiNameNotExistsException apiNameNotExistsException) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.badRequest().build();
     }
 
