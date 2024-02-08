@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Currency;
 
 
 @NoArgsConstructor
@@ -47,6 +48,11 @@ public class NbrbRateDto extends GeneralExternalApiRate implements Checkable {
     @Override
     public LocalDate getDateOfRate() {
         return LocalDate.from(date);
+    }
+
+    @Override
+    public Currency getLocalCurrency() {
+        return Currency.getInstance("BYN");
     }
 
 }

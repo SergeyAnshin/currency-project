@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.Currency;
 
 
 @NoArgsConstructor
@@ -39,6 +40,11 @@ public class AlfaBankRate extends GeneralExternalApiRate implements Checkable {
     @Override
     public LocalDate getDateOfRate() {
         return date;
+    }
+
+    @Override
+    public Currency getLocalCurrency() {
+        return Currency.getInstance("BYN");
     }
 
 }
