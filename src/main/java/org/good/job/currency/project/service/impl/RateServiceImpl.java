@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
+import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.RateService;
+import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +20,18 @@ import java.util.Currency;
 public class RateServiceImpl implements RateService {
 
     private final RateDao rateDao;
+    private final CurrencyService currencyService;
 
     @Override
     public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName,
-                                                                  Currency currencyCode,
+                                                                  Currency currency,
                                                                   LocalDate date) {
-        return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(externalApiName, currencyCode, date)
-                .orElseThrow(RateNotFoundException::new);
+        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, currency)) {
+            return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(externalApiName, currency, date)
+                    .orElseThrow(RateNotFoundException::new);
+        } else {
+            throw new CurrencyNotSupportedByExternalApiException();
+        }
     }
 
 }
