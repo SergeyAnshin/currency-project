@@ -28,7 +28,6 @@ public class RateController {
     private final RateServiceImpl rateServiceImpl;
 
     @GetMapping
-    @SupportedCurrencyByExternalApi
     public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam ExternalApiName externalApiName,
                                                                         @RequestParam Currency currency,
                                                                         @RequestParam @PastOrPresent LocalDate date) {
