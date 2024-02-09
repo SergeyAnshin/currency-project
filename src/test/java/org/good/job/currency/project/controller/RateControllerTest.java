@@ -6,7 +6,6 @@ import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExt
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.good.job.currency.project.service.impl.RateServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,16 +26,14 @@ class RateControllerTest {
     public static final String RATE_CONTROLLER_BASE_URL = "/rate";
     @MockBean(value = RateServiceImpl.class)
     private RateService rateService;
-    @InjectMocks
-    private RateController rateController;
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void returnNotFoundIfExternalApiNotSupported() throws Exception {
-        String externalApiName = "FAKE API";
-        String currency = "USD";
-        LocalDate currentDate = LocalDate.now();
+        var externalApiName = "FAKE API";
+        var currency = "USD";
+        var currentDate = LocalDate.now();
 
         mockMvc.perform(get(RATE_CONTROLLER_BASE_URL)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -48,9 +45,9 @@ class RateControllerTest {
 
     @Test
     public void returnNotFoundIfCurrencyNotSupportedByExternalApi() throws Exception {
-        String externalApiName = ExternalApiName.ALFA_BANK.toString();
-        Currency currency = Currency.getInstance("JPY");
-        LocalDate currentDate = LocalDate.now();
+        var externalApiName = ExternalApiName.ALFA_BANK.toString();
+        var currency = Currency.getInstance("JPY");
+        var currentDate = LocalDate.now();
 
         when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency, currentDate))
                 .thenThrow(CurrencyNotSupportedByExternalApiException.class);
@@ -65,9 +62,9 @@ class RateControllerTest {
 
     @Test
     public void returnNotFoundIfRateNotFound() throws Exception {
-        String externalApiName = ExternalApiName.ALFA_BANK.toString();
-        Currency currency = Currency.getInstance("USD");
-        LocalDate dateBeyondServiceExistence = LocalDate.of(2023, 2, 9);
+        var externalApiName = ExternalApiName.ALFA_BANK.toString();
+        var currency = Currency.getInstance("USD");
+        var dateBeyondServiceExistence = LocalDate.of(2023, 2, 9);
 
         when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency,
                                                                     dateBeyondServiceExistence))
