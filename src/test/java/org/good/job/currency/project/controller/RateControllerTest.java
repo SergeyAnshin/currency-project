@@ -3,6 +3,7 @@ package org.good.job.currency.project.controller;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.RateService;
 import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
+import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.good.job.currency.project.service.impl.RateServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -73,4 +74,20 @@ class RateControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void returnNotFoundIfRateNotFound() throws Exception {
+        String externalApiName = ExternalApiName.ALFA_BANK.toString();
+        Currency currency = Currency.getInstance("USD");
+        LocalDate dateBeyondServiceExistence = LocalDate.of(2023, 2, 9);
+
+        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency, dateBeyondServiceExistence))
+                .thenThrow(RateNotFoundException.class);
+
+        mockMvc.perform(get(RATE_CONTROLLER_BASE_URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .param("externalApiName", externalApiName)
+                                .param("currency", currency.getCurrencyCode())
+                                .param("date", dateBeyondServiceExistence.toString()))
+                .andExpect(status().isNotFound());
+    }
 }
