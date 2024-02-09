@@ -2,13 +2,14 @@ package org.good.job.currency.project.dao.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.RateDao;
+import org.good.job.currency.project.dto.ArrayRate;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
-import org.good.job.currency.project.service.ArrayResolver;
 import org.good.job.currency.project.service.ExternalApiCaller;
 import org.good.job.currency.project.service.ExternalApiDtoMapper;
 import org.good.job.currency.project.service.ExternalApiUrlService;
+import org.good.job.currency.project.service.RequiredExternalApiRateExtractor;
 import org.good.job.currency.project.service.mapper.RateMapper;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class RestTemplateRateDao implements RateDao {
     private final ExternalApiUrlService urlService;
     private final RateMapper rateMapper;
     private final ExternalApiDtoMapper externalApiDtoMapper;
-    private final ArrayResolver rateArrayByCurrencyAndDateResolver;
+    private final RequiredExternalApiRateExtractor requiredRateExtractor;
 
     @Override
     public Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName externalApiName,
@@ -38,9 +39,16 @@ public class RestTemplateRateDao implements RateDao {
 
         var dtoClass = externalApiName.getExternalApiRateProperty().getRateProperty().getDtoClass();
         var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
-        externalApiDto = rateArrayByCurrencyAndDateResolver.resolve(externalApiDto, param);
+        externalApiDto = extractRequiredExternalApiRateIfRateRepresentingJsonArray(externalApiDto, param);
 
         return Optional.of(rateMapper.externalApiRateDtoToRate(externalApiDto, param));
+    }
+
+    private Object extractRequiredExternalApiRateIfRateRepresentingJsonArray(Object externalApiDto, ExternalApiUrl param) {
+        if (externalApiDto instanceof ArrayRate<?> rateList) {
+            return requiredRateExtractor.extractFromRateList(rateList, param);
+        }
+        return externalApiDto;
     }
 
 }
