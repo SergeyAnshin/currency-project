@@ -1,6 +1,7 @@
 package org.good.job.currency.project.controller.error;
 
 import jakarta.validation.ConstraintViolationException;
+import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
 import org.good.job.currency.project.service.exception.ExternalApiNameNotExistsException;
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.beans.TypeMismatchException;
@@ -46,6 +47,12 @@ public class RateErrorController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RateNotFoundException.class)
     public ResponseEntity<Object> handleRateNotFoundException(RateNotFoundException ex) {
+        return ResponseEntity.notFound().build();
+    }
+
+
+    @ExceptionHandler(CurrencyNotSupportedByExternalApiException.class)
+    public ResponseEntity<Object> handleCurrencyNotSupportedByExternalApiException(CurrencyNotSupportedByExternalApiException ex) {
         return ResponseEntity.notFound().build();
     }
 
