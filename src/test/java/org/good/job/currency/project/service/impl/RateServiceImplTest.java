@@ -5,6 +5,7 @@ import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
+import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -56,6 +57,20 @@ class RateServiceImplTest {
         when(currencyService.isCurrencySupportedByExternalApi(ExternalApiName.ALFA_BANK, currency)).thenReturn(false);
 
         assertThrows(CurrencyNotSupportedByExternalApiException.class,
+                     () -> rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency,
+                                                                                  currentDate));
+    }
+
+    @Test
+    void getRateByExternalApiNameAndCurrencyAndDateMethodThrowExceptionIfRateNotFound() {
+        var currency = Currency.getInstance("JPY");
+        var currentDate = LocalDate.now();
+
+        when(currencyService.isCurrencySupportedByExternalApi(ExternalApiName.ALFA_BANK, currency)).thenReturn(true);
+        when(rateDao.findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName.ALFA_BANK, currency, currentDate))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RateNotFoundException.class,
                      () -> rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency,
                                                                                   currentDate));
     }
