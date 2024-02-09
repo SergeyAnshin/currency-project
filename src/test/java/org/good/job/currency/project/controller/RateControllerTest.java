@@ -2,6 +2,7 @@ package org.good.job.currency.project.controller;
 
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.RateService;
+import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
 import org.good.job.currency.project.service.impl.RateServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.Currency;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,11 +44,32 @@ class RateControllerTest {
 
     @Test
     public void returnNotFoundIfExternalApiNotSupported() throws Exception {
+        String externalApiName = "FAKE API";
+        String currency = "USD";
+        LocalDate currentDate = LocalDate.now();
+
         mockMvc.perform(get(RATE_CONTROLLER_BASE_URL)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .param("externalApiName", "FFF_BANK")
-                                .param("currency", "USD")
-                                .param("date", "2024-02-08"))
+                                .param("externalApiName", externalApiName)
+                                .param("currency", currency)
+                                .param("date", currentDate.toString()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void returnNotFoundIfCurrencyNotSupportedByExternalApi() throws Exception {
+        String externalApiName = ExternalApiName.ALFA_BANK.toString();
+        Currency currency = Currency.getInstance("JPY");
+        LocalDate currentDate = LocalDate.now();
+
+        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency, currentDate))
+                .thenThrow(CurrencyNotSupportedByExternalApiException.class);
+
+        mockMvc.perform(get(RATE_CONTROLLER_BASE_URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .param("externalApiName", externalApiName)
+                                .param("currency", currency.getCurrencyCode())
+                                .param("date", currentDate.toString()))
                 .andExpect(status().isNotFound());
     }
 
