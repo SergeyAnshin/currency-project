@@ -4,6 +4,7 @@ import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
+import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,8 +15,7 @@ import java.time.LocalDate;
 import java.util.Currency;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 
@@ -46,6 +46,18 @@ class RateServiceImplTest {
             assertEquals(existingRate.getBuyRate(), rate.getBuyRate());
             assertEquals(existingRate.getSellRate(), rate.getSellRate());
         });
+    }
+
+    @Test
+    void getRateByExternalApiNameAndCurrencyAndDateMethodThrowExceptionIfCurrencyNotSupportedExternalApi() {
+        var currency = Currency.getInstance("JPY");
+        var currentDate = LocalDate.now();
+
+        when(currencyService.isCurrencySupportedByExternalApi(ExternalApiName.ALFA_BANK, currency)).thenReturn(false);
+
+        assertThrows(CurrencyNotSupportedByExternalApiException.class,
+                     () -> rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency,
+                                                                                  currentDate));
     }
 
 }
