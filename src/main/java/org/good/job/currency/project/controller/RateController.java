@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.impl.RateServiceImpl;
-import org.good.job.currency.project.service.validation.annotation.SupportedCurrencyByExternalApi;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

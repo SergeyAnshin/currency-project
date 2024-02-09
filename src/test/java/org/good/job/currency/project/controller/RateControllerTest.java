@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.Currency;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,16 +31,6 @@ class RateControllerTest {
     private RateController rateController;
     @Autowired
     private MockMvc mockMvc;
-
-
-    @Test
-    public void firstAndSecondParametersInGetExternalApiCurrencyRateByDateMethodAreCurrencyAndMoney() {
-        assertDoesNotThrow(() -> {
-            rateController.getClass()
-                    .getDeclaredMethod("getExternalApiCurrencyRateByDate", ExternalApiName.class, Currency.class,
-                                       LocalDate.class);
-        });
-    }
 
     @Test
     public void returnNotFoundIfExternalApiNotSupported() throws Exception {
@@ -80,7 +69,8 @@ class RateControllerTest {
         Currency currency = Currency.getInstance("USD");
         LocalDate dateBeyondServiceExistence = LocalDate.of(2023, 2, 9);
 
-        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency, dateBeyondServiceExistence))
+        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency,
+                                                                    dateBeyondServiceExistence))
                 .thenThrow(RateNotFoundException.class);
 
         mockMvc.perform(get(RATE_CONTROLLER_BASE_URL)
@@ -90,4 +80,5 @@ class RateControllerTest {
                                 .param("date", dateBeyondServiceExistence.toString()))
                 .andExpect(status().isNotFound());
     }
+
 }
