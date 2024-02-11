@@ -1,0 +1,29 @@
+spring:
+  messages:
+    basename: ExternalApi
+
+api:
+  banks:
+    ALFA_BANK:
+      currencyExternalApiUrl:
+        name: https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates
+        parameters:
+      rateExternalApiUrl:
+        name: https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates
+        parameters:
+    BELARUS_BANK:
+      currencyExternalApiUrl:
+        name: https://belarusbank.by/api/kurs_cards?kursDate
+        parameters:
+      rateExternalApiUrl:
+        name: https://belarusbank.by/api/kurs_cards?kursDate
+        parameters:
+    NATIONAL_BANK:
+      currencyExternalApiUrl:
+        name: https://api.nbrb.by/exrates/rates?periodicity=0
+        parameters:
+      rateExternalApiUrl:
+        name: https://api.nbrb.by/exrates/rates/{currencyCode}?ondate={date}&parammode=2
+        parameters:
+          - currencyCode
+          - date

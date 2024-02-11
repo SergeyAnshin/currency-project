@@ -2,7 +2,7 @@ package org.good.job.currency.project.service.impl;
 
 import org.good.job.currency.project.dto.BelarusBankRate;
 import org.good.job.currency.project.dto.GeneralExternalApiRate;
-import org.good.job.currency.project.entity.ExternalApiUrl;
+import org.good.job.currency.project.entity.ExternalApiUrlOld;
 import org.good.job.currency.project.service.RateChecker;
 import org.good.job.currency.project.service.annotations.AssignedClass;
 import org.springframework.stereotype.Service;
@@ -21,21 +21,22 @@ public class BelarusBankRateChecker implements RateChecker {
     public static final String SELL_RATE_PREFIX = "SELL";
 
     @Override
-    public boolean isRateMatchParameters(GeneralExternalApiRate externalApiRate, ExternalApiUrl externalApiUrl) {
+    public boolean isRateMatchParameters(GeneralExternalApiRate externalApiRate, ExternalApiUrlOld externalApiUrlOld) {
         if (externalApiRate instanceof BelarusBankRate rate) {
-            return isMatchingByCurrencyAndSpecifiedDate(rate, externalApiUrl);
+            return isMatchingByCurrencyAndSpecifiedDate(rate, externalApiUrlOld);
         } else {
             throw new IllegalArgumentException();
         }
     }
 
-    private boolean isMatchingByCurrencyAndSpecifiedDate(BelarusBankRate rate, ExternalApiUrl externalApiUrl) {
-        return containCurrencyInFields(rate, externalApiUrl) && LocalDate.from(rate.getDate()).equals(externalApiUrl.getDate());
+    private boolean isMatchingByCurrencyAndSpecifiedDate(BelarusBankRate rate, ExternalApiUrlOld externalApiUrlOld) {
+        return containCurrencyInFields(rate, externalApiUrlOld) && LocalDate.from(rate.getDate()).equals(
+                externalApiUrlOld.getDate());
     }
 
-    private boolean containCurrencyInFields(BelarusBankRate rate, ExternalApiUrl externalApiUrl) {
+    private boolean containCurrencyInFields(BelarusBankRate rate, ExternalApiUrlOld externalApiUrlOld) {
         Field[] declaredFields = rate.getClass().getDeclaredFields();
-        String currencyCode = externalApiUrl.getCurrency().getCurrencyCode();
+        String currencyCode = externalApiUrlOld.getCurrency().getCurrencyCode();
         return Arrays.stream(declaredFields)
                 .anyMatch(field -> field.getName().toUpperCase().contains(BUY_RATE_PREFIX + currencyCode)
                         || field.getName().toUpperCase().contains(SELL_RATE_PREFIX + currencyCode));

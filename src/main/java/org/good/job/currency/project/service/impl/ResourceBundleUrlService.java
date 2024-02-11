@@ -1,7 +1,7 @@
 package org.good.job.currency.project.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.good.job.currency.project.entity.ExternalApiUrl;
+import org.good.job.currency.project.entity.ExternalApiUrlOld;
 import org.good.job.currency.project.service.ExternalApiUrlService;
 import org.good.job.currency.project.service.exception.RateByDateAndCurrencyNotSupportedByApiException;
 import org.springframework.context.MessageSource;
@@ -19,7 +19,7 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
     private final MessageSource messageSource;
 
     @Override
-    public String generateRateUrlByExternalApiNameAndCurrencyAndDate(ExternalApiUrl param) {
+    public String generateRateUrlByExternalApiNameAndCurrencyAndDate(ExternalApiUrlOld param) {
         var urlMessageCode = param.getExternalApiName()
                 .getExternalApiRateProperty()
                 .getRateProperty()

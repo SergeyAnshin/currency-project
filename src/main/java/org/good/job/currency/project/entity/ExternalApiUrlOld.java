@@ -13,7 +13,8 @@ import java.util.Currency;
 @Getter
 @Setter
 @ToString
-public class ExternalApiUrl {
+// TODO заменить на использование ExternalApiUrl из dao
+public class ExternalApiUrlOld {
 
     private ExternalApiName externalApiName;
     private Currency currency;

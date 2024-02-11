@@ -2,7 +2,7 @@ package org.good.job.currency.project.service;
 
 import org.good.job.currency.project.dto.GeneralExternalApiRate;
 import org.good.job.currency.project.dto.Checkable;
-import org.good.job.currency.project.entity.ExternalApiUrl;
+import org.good.job.currency.project.entity.ExternalApiUrlOld;
 
 import java.time.LocalDate;
 import java.util.Currency;
@@ -10,7 +10,7 @@ import java.util.Currency;
 
 public interface RateChecker {
 
-    boolean isRateMatchParameters(GeneralExternalApiRate rate, ExternalApiUrl externalApiUrl);
+    boolean isRateMatchParameters(GeneralExternalApiRate rate, ExternalApiUrlOld externalApiUrlOld);
 
     default boolean isMatchingByDate(Checkable rate, LocalDate date) {
         return rate.getDateOfRate().equals(date);

@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface CurrencyService {
-    List<Currency> getAvailableCurrenciesByExternalApi(ExternalApiName externalApiName);
+    List<Currency> getAvailableCurrenciesByBankName(String bankName);
 
     boolean isCurrencySupportedByExternalApi(ExternalApiName externalApiName, Currency currency);
 }
