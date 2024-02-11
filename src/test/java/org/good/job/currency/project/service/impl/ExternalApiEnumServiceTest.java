@@ -25,7 +25,7 @@ class ExternalApiEnumServiceTest {
         var availableExternalApis = apiService.getAvailableExternalApis();
         boolean containsAll = Arrays.stream(ExternalApiName.values())
                 .map(Enum::name)
-                .map(e -> e.replaceAll("_", " "))
+                .map(externalApiName -> externalApiName.replaceAll("_", " "))
                 .map(String::toLowerCase)
                 .map(StringUtils::capitalize)
                 .allMatch(availableExternalApis::contains);
