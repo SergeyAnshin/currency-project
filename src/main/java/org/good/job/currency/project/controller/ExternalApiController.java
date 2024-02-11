@@ -20,7 +20,7 @@ public class ExternalApiController {
 
     @GetMapping
     public ResponseEntity<List<String>> getAvailableExternalApis() {
-        List<String> availableExternalApis = externalApiService.getAvailableExternalApis();
+        var availableExternalApis = externalApiService.getAvailableExternalApis();
         return ResponseEntity.ok(availableExternalApis);
     }
 
