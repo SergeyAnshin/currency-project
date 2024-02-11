@@ -20,21 +20,22 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
 
     @Override
     public String generateRateUrlByExternalApiNameAndCurrencyAndDate(ExternalApiUrlOld param) {
-        var urlMessageCode = param.getExternalApiName()
-                .getExternalApiRateProperty()
-                .getRateProperty()
-                .getRateByCurrencyCodeAndDateCode();
-        var currencyCode = param.getCurrency().getCurrencyCode();
-        var date = param.getDate();
-        try {
-            var rateUrl = messageSource.getMessage(urlMessageCode, new Object[]{ currencyCode, date }, Locale.US);
-            if (!rateUrl.isBlank()) {
-                return rateUrl;
-            }
-            throw new NoSuchMessageException(null);
-        } catch (NoSuchMessageException noSuchMessageException) {
-            throw new RateByDateAndCurrencyNotSupportedByApiException();
-        }
+//        var urlMessageCode = param.getExternalApiName()
+//                .getExternalApiProperty()
+//                .getProperty()
+//                .getRateByCurrencyCodeAndDateCode();
+//        var currencyCode = param.getCurrency().getCurrencyCode();
+//        var date = param.getDate();
+//        try {
+//            var rateUrl = messageSource.getMessage(urlMessageCode, new Object[]{ currencyCode, date }, Locale.US);
+//            if (!rateUrl.isBlank()) {
+//                return rateUrl;
+//            }
+//            throw new NoSuchMessageException(null);
+//        } catch (NoSuchMessageException noSuchMessageException) {
+//            throw new RateByDateAndCurrencyNotSupportedByApiException();
+//        }
+        return "";
     }
 
 }

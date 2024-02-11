@@ -5,24 +5,24 @@ spring:
 api:
   banks:
     ALFA_BANK:
-      currencyExternalApiUrl:
+      currencyUrl:
         name: https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates
         parameters:
-      rateExternalApiUrl:
+      rateUrl:
         name: https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates
         parameters:
     BELARUS_BANK:
-      currencyExternalApiUrl:
+      currencyUrl:
         name: https://belarusbank.by/api/kurs_cards?kursDate
         parameters:
-      rateExternalApiUrl:
+      rateUrl:
         name: https://belarusbank.by/api/kurs_cards?kursDate
         parameters:
     NATIONAL_BANK:
-      currencyExternalApiUrl:
+      currencyUrl:
         name: https://api.nbrb.by/exrates/rates?periodicity=0
         parameters:
-      rateExternalApiUrl:
+      rateUrl:
         name: https://api.nbrb.by/exrates/rates/{currencyCode}?ondate={date}&parammode=2
         parameters:
           - currencyCode

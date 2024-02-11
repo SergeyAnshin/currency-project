@@ -38,9 +38,10 @@ public class CurrencyServiceImpl implements CurrencyService {
         ExternalApiUrl currencyExternalApiUrl = bank.getCurrencyExternalApiUrl();
         HashMap<String, String> parametersHashMap = parameters.getParametersHashMap();
         String currencyUrlWithParameters = parameterConverter.convert(currencyExternalApiUrl, parametersHashMap);
-
-        var responseBody = externalApiCaller.call(currencyUrlWithParameters);
-
+        String responseBody = externalApiCaller.call(currencyUrlWithParameters);
+        Class<?> dtoClass = ExternalApiName.valueOf(bankName).getExternalApiProperty().getProperty().getCurrencyDtoClass();
+        // TODO реализовать dto для всех вариантов api
+        Object externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
         return null;
     }
 

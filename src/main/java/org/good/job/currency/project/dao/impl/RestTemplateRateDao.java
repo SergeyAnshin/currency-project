@@ -37,7 +37,7 @@ public class RestTemplateRateDao implements RateDao {
         var externalApiRateUrl = urlService.generateRateUrlByExternalApiNameAndCurrencyAndDate(param);
         var responseBody = externalApiCaller.call(externalApiRateUrl);
 
-        var dtoClass = externalApiName.getExternalApiRateProperty().getRateProperty().getDtoClass();
+        var dtoClass = externalApiName.getExternalApiProperty().getProperty().getRateDtoClass();
         var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
         externalApiDto = extractRequiredExternalApiRateIfRateRepresentingJsonArray(externalApiDto, param);
 
