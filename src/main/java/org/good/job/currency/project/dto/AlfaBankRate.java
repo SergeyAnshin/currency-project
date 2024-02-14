@@ -1,5 +1,6 @@
 package org.good.job.currency.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -17,10 +18,12 @@ import java.util.Currency;
 public class AlfaBankRate extends GeneralExternalApiRate implements Checkable {
 
     private double sellRate;
-    private String sellIso;
+    @JsonAlias("sellIso")
+    private String sellCurrencyCode;
     private int sellCode;
     private double buyRate;
-    private String buyIso;
+    @JsonAlias("buyIso")
+    private String buyCurrencyCode;
     private int buyCode;
     private int quantity;
     private String name;
@@ -29,12 +32,12 @@ public class AlfaBankRate extends GeneralExternalApiRate implements Checkable {
 
     @Override
     public String getSellCurrencyCode() {
-        return sellIso;
+        return sellCurrencyCode;
     }
 
     @Override
     public String getBuyCurrencyCode() {
-        return buyIso;
+        return buyCurrencyCode;
     }
 
     @Override

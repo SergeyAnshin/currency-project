@@ -29,6 +29,7 @@ public class RateRequiredExternalApiRateExtractor implements RequiredExternalApi
         if (ratesMatchingSpecifiedParameters.isEmpty()) {
             throw new RateNotFoundException();
         }
+        // TODO придумать выборку по времени
         return ratesMatchingSpecifiedParameters.getFirst();
     }
 

@@ -15,6 +15,8 @@ public class Property {
 
     private Class<?> currencyDtoClass;
     private Class<?> rateDtoClass;
+    private String rateByCurrencyCodeAndDateCode;
+
 
     @Override
     public boolean equals(Object o) {

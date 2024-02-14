@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 
 @Component
-
-@SupportedValidationTarget(ValidationTarget.PARAMETERS)
 public class SupportedBankValidator implements ConstraintValidator<SupportedBank, String> {
 
     private final ConfigProperties configProperties;
@@ -25,10 +23,10 @@ public class SupportedBankValidator implements ConstraintValidator<SupportedBank
     }
 
     @Override
-    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return s != null
-                && !s.isBlank()
-                && configProperties.getBanks().get(s) != null;
+    public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
+        return name != null
+                && !name.isBlank()
+                && configProperties.getBanks().get(name) != null;
     }
 
 }

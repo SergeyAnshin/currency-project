@@ -3,6 +3,7 @@ package org.good.job.currency.project.dto;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.good.job.currency.project.dto.enums.ConstCurrency;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public class NbrbRateDto extends GeneralExternalApiRate implements Checkable {
     private LocalDateTime date;
 
     @JsonAlias({ "Cur_Abbreviation" })
-    private String currencyAbbreviation;
+    private String sellCurrencyCode;
 
     @JsonAlias({ "Cur_Scale" })
     private int foreignCurrencyUnitsNumber;
@@ -37,12 +38,12 @@ public class NbrbRateDto extends GeneralExternalApiRate implements Checkable {
 
     @Override
     public String getSellCurrencyCode() {
-        return currencyAbbreviation;
+        return sellCurrencyCode;
     }
 
     @Override
     public String getBuyCurrencyCode() {
-        return "BYN";
+        return ConstCurrency.BYN.toString();
     }
 
     @Override

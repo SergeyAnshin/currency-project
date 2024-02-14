@@ -6,21 +6,21 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Getter
 @Setter
 @ToString
-@JsonDeserialize(using = BelarusBankRateListDeserializer.class)
-public class BelarusBankRateList implements ArrayRate<BelarusBankConvertedDto> {
+@JsonDeserialize(using = NbrbCurrencyListDeserializer.class)
+public class NbrbRateDtoList implements ArrayRate<NbrbRateDto>{
 
-    List<BelarusBankConvertedDto> rates;
+
+    private List<NbrbRateDto> rates;
 
     @Override
-    public List<BelarusBankConvertedDto> getListDto() {
-        return rates;
+    public List<NbrbRateDto> getListDto() {
+        return null;
     }
 
 }
