@@ -15,21 +15,21 @@ import java.util.Currency;
 @NoArgsConstructor
 @Builder
 @Data
-public class BelarusBankConvertedDto extends GeneralExternalApiRate implements Checkable {
+public class BelarusBankConvertedDto extends GeneralExternalApiDto implements Checkable {
     private LocalDateTime date;
-    private String sellCurrency;
-    private final String buyCurrency = ConstCurrency.BYN.toString();
+    private String sellCurrencyCode;
+    private final String buyCurrencyCode = ConstCurrency.BYN.toString();
     private double sellRate;
     private double buyRate;
 
     @Override
     public String getSellCurrencyCode() {
-        return sellCurrency;
+        return sellCurrencyCode;
     }
 
     @Override
     public String getBuyCurrencyCode() {
-        return buyCurrency;
+        return buyCurrencyCode;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BelarusBankConvertedDto extends GeneralExternalApiRate implements C
 
     @Override
     public Currency getLocalCurrency() {
-        return Currency.getInstance(buyCurrency);
+        return Currency.getInstance(buyCurrencyCode);
     }
 
 }

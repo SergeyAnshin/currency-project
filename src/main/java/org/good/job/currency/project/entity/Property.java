@@ -15,6 +15,7 @@ public class Property {
 
     private Class<?> currencyDtoClass;
     private Class<?> rateDtoClass;
+    private String currencyByExternalApiName;
     private String rateByCurrencyCodeAndDateCode;
 
 
@@ -23,13 +24,12 @@ public class Property {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Property that = (Property) o;
-        return Objects.equals(currencyDtoClass, that.currencyDtoClass)
-                && Objects.equals(rateDtoClass, that.rateDtoClass);
+        return Objects.equals(rateDtoClass, that.rateDtoClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(currencyDtoClass, rateDtoClass);
+        return Objects.hash(rateDtoClass, rateByCurrencyCodeAndDateCode);
     }
 
 }

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class BelarusBankRate extends GeneralExternalApiRate {
+public class BelarusBankDto extends GeneralExternalApiDto {
 
     @JsonAlias({ "kurs_date_time" })
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

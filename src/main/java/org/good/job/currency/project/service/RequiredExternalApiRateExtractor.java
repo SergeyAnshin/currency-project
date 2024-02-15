@@ -1,11 +1,11 @@
 package org.good.job.currency.project.service;
 
-import org.good.job.currency.project.dto.ArrayRate;
-import org.good.job.currency.project.entity.ExternalApiUrlOld;
+import org.good.job.currency.project.dto.ArrayDto;
+import org.good.job.currency.project.entity.ExternalApiUrl;
 
 
 public interface RequiredExternalApiRateExtractor {
 
-    Object extractFromRateList(ArrayRate<?> externalApiRateDto, ExternalApiUrlOld externalApiUrlOld);
+    Object extractFromRateList(ArrayDto<?> externalApiRateDto, ExternalApiUrl externalApiUrl);
 
 }

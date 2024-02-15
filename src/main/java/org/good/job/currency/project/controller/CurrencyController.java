@@ -1,9 +1,8 @@
 package org.good.job.currency.project.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.good.job.currency.project.ConfigProperties;
+import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.impl.CurrencyServiceImpl;
-import org.good.job.currency.project.service.validation.annotation.SupportedBank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +18,9 @@ public class CurrencyController {
 
     private final CurrencyServiceImpl currencyService;
 
-    @GetMapping("/{bankName}/currencies")
-    public ResponseEntity<?> getAvailableCurrenciesByBankName(@PathVariable /*@SupportedBank*/ String bankName) {
-        return ResponseEntity.ok(currencyService.getAvailableCurrenciesByBankName(bankName));
+    @GetMapping("/{externalApiName}/currencies")
+    public ResponseEntity<?> getAvailableCurrenciesByBankName(@PathVariable ExternalApiName externalApiName) {
+        return ResponseEntity.ok(currencyService.getAvailableCurrenciesByExternalApiName(externalApiName));
     }
 
 }

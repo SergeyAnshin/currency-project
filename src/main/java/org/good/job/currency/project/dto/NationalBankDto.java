@@ -16,7 +16,7 @@ import java.util.Currency;
 @Getter
 @Setter
 @ToString
-public class NbrbRateDto extends GeneralExternalApiRate implements Checkable {
+public class NationalBankDto extends GeneralExternalApiDto implements Checkable {
 
     @JsonAlias({ "Cur_ID" })
     private long currencyId;

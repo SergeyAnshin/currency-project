@@ -15,7 +15,7 @@ import java.util.Currency;
 @Getter
 @Setter
 @ToString
-public class AlfaBankRate extends GeneralExternalApiRate implements Checkable {
+public class AlfaBankDto extends GeneralExternalApiDto implements Checkable {
 
     private double sellRate;
     @JsonAlias("sellIso")

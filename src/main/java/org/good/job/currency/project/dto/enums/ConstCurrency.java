@@ -5,5 +5,5 @@ public enum ConstCurrency {
     EUR,
     USD,
     RUB,
-    CYN;
+    CNY;
 }
