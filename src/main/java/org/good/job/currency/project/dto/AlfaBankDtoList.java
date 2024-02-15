@@ -12,12 +12,12 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class AlfaBankRateList implements ArrayRate<AlfaBankRate> {
+public class AlfaBankDtoList implements ArrayDto<AlfaBankDto> {
 
-    List<AlfaBankRate> rates;
+    List<AlfaBankDto> rates;
 
     @Override
-    public List<AlfaBankRate> getListDto() {
+    public List<AlfaBankDto> getListDto() {
         return rates;
     }
 

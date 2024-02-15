@@ -2,7 +2,7 @@ package org.good.job.currency.project.service.impl;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.good.job.currency.project.dto.GeneralExternalApiRate;
+import org.good.job.currency.project.dto.GeneralExternalApiDto;
 import org.good.job.currency.project.service.RateChecker;
 import org.good.job.currency.project.service.annotations.AssignedClass;
 import org.good.job.currency.project.service.exception.AssignedClassMissingException;
@@ -36,7 +36,7 @@ public class RateCheckFactory {
         }
     }
 
-    public RateChecker getRateCheckerByRateDtoClass(Class<? extends GeneralExternalApiRate> externalApiRate) {
+    public RateChecker getRateCheckerByRateDtoClass(Class<? extends GeneralExternalApiDto> externalApiRate) {
         String externalApiRateSimpleName = externalApiRate.getSimpleName();
         return rateCheckerByExternalApiRateSimpleName.get(externalApiRateSimpleName);
     }

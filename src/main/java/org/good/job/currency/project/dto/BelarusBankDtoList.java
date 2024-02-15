@@ -3,6 +3,7 @@ package org.good.job.currency.project.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.good.job.currency.project.dto.deserializers.BelarusBankRateListDeserializer;
 
 import java.util.List;
 
@@ -14,14 +15,13 @@ import java.util.List;
 @Setter
 @ToString
 @JsonDeserialize(using = BelarusBankRateListDeserializer.class)
-public class BelarusBankRateList implements ArrayRate<BelarusBankRate> {
+public class BelarusBankDtoList implements ArrayDto<BelarusBankConvertedDto> {
 
-    List<BelarusBankRate> rates;
+    List<BelarusBankConvertedDto> rates;
 
     @Override
-    public List<BelarusBankRate> getListDto() {
+    public List<BelarusBankConvertedDto> getListDto() {
         return rates;
     }
-
 
 }

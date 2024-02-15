@@ -14,6 +14,7 @@ import java.util.Currency;
 @Getter
 @Setter
 @ToString
+// TODO заменить на использование ExternalApiUrl из dao
 public class ExternalApiUrl {
     @UrlParameter(name = "apiName")
     private ExternalApiName externalApiName;

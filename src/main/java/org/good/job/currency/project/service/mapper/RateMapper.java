@@ -1,21 +1,20 @@
 package org.good.job.currency.project.service.mapper;
 
-import org.good.job.currency.project.dto.AlfaBankRate;
-import org.good.job.currency.project.dto.BelarusBankRate;
-import org.good.job.currency.project.dto.NbrbRateDto;
+import org.good.job.currency.project.dto.AlfaBankDto;
+import org.good.job.currency.project.dto.BelarusBankConvertedDto;
+import org.good.job.currency.project.dto.NationalBankDto;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralRate;
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.SubclassMapping;
 
 
-@Mapper(uses = { BelarusBankRateMapper.class })
+@Mapper
 public interface RateMapper {
 
-    @SubclassMapping(target = GeneralRate.class, source = NbrbRateDto.class)
-    @SubclassMapping(target = GeneralRate.class, source = AlfaBankRate.class)
-    @SubclassMapping(target = GeneralRate.class, source = BelarusBankRate.class)
-    GeneralRate externalApiRateDtoToRate(Object externalApiRateDto, @Context ExternalApiUrl externalApiUrl);
+    @SubclassMapping(target = GeneralRate.class, source = NationalBankDto.class)
+    @SubclassMapping(target = GeneralRate.class, source = AlfaBankDto.class)
+    @SubclassMapping(target = GeneralRate.class, source = BelarusBankConvertedDto.class)
+    GeneralRate externalApiRateDtoToRate(Object externalApiRateDto, ExternalApiUrl externalApiUrl);
 
 }

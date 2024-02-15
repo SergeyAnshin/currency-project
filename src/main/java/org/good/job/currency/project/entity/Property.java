@@ -11,23 +11,25 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-public class RateProperty {
+public class Property {
 
+    private Class<?> currencyDtoClass;
+    private Class<?> rateDtoClass;
+    private String currencyByExternalApiName;
     private String rateByCurrencyCodeAndDateCode;
-    private Class<?> dtoClass;
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RateProperty that = (RateProperty) o;
-        return Objects.equals(rateByCurrencyCodeAndDateCode, that.rateByCurrencyCodeAndDateCode)
-                && Objects.equals(dtoClass, that.dtoClass);
+        Property that = (Property) o;
+        return Objects.equals(rateDtoClass, that.rateDtoClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rateByCurrencyCodeAndDateCode, dtoClass);
+        return Objects.hash(rateDtoClass, rateByCurrencyCodeAndDateCode);
     }
 
 }
