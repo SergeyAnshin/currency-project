@@ -7,6 +7,7 @@ import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.RateService;
+import org.good.job.currency.project.service.validation.annotation.SupportedCurrencyCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
-
-/**
- * Add currencyValidation
- */
 
 @RequiredArgsConstructor
 
@@ -33,7 +30,8 @@ public class RateController {
 
     @GetMapping
     public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam ExternalApiName externalApiName,
-                                                                        @RequestParam String currencyCode,
+                                                                        @RequestParam @SupportedCurrencyCode
+                                                                        String currencyCode,
                                                                         @RequestParam @PastOrPresent LocalDate date) {
         var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(externalApiName, currencyCode, date);
         return ResponseEntity.ok(rate);
@@ -41,7 +39,8 @@ public class RateController {
 
     @GetMapping("/statistics")
     public ResponseEntity<RateStatisticData> getCurrencyRateStatistics(@RequestParam ExternalApiName externalApiName,
-                                                                       @RequestParam String currencyCode,
+                                                                       @RequestParam @SupportedCurrencyCode
+                                                                       String currencyCode,
                                                                        @RequestParam @Past LocalDate startDate,
                                                                        @RequestParam @PastOrPresent LocalDate endDate) {
         var rateStatistics = rateService.getStatistics(externalApiName, currencyCode, startDate, endDate);
