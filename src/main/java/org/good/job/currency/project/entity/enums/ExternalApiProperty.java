@@ -14,22 +14,16 @@ import org.good.job.currency.project.entity.Property;
 @Getter
 public enum ExternalApiProperty {
     NATIONAL_BANK_PROPERTY(Property.builder()
-                                   .currencyDtoClass(NationalBankDtoList.class)
-                                   .rateDtoClass(NationalBankDto.class)
                                    .currencyByExternalApiName("external-api.url.currency.by-name.nbrb")
                                    .rateByCurrencyCodeAndDateCode(
                                            "external-api.url.rate.by-currency-code-and-date.nbrb")
                                    .build()),
     ALFA_BANK_PROPERTY(Property.builder()
-                               .currencyDtoClass(AlfaBankDtoList.class)
-                               .rateDtoClass(AlfaBankDtoList.class)
                                .currencyByExternalApiName("external-api.url.currency.by-name.alfa-bank")
                                .rateByCurrencyCodeAndDateCode(
                                        "external-api.url.rate.by-currency-code-and-date.alfa-bank")
                                .build()),
     BELARUS_BANK_PROPERTY(Property.builder()
-                                  .currencyDtoClass(BelarusBankDtoList.class)
-                                  .rateDtoClass(BelarusBankDtoList.class)
                                   .currencyByExternalApiName("external-api.url.currency.by-name.belarus-bank")
                                   .rateByCurrencyCodeAndDateCode(
                                           "external-api.url.rate.by-currency-code-and-date.belarus-bank")

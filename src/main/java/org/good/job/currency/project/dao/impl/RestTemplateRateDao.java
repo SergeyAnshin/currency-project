@@ -3,6 +3,7 @@ package org.good.job.currency.project.dao.impl;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.dto.ArrayDto;
+import org.good.job.currency.project.dto.storage.ExternalApiDtoClassesDataStorage;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
@@ -28,6 +29,7 @@ public class RestTemplateRateDao implements RateDao {
     private final RateMapper rateMapper;
     private final ExternalApiDtoMapper externalApiDtoMapper;
     private final RequiredExternalApiRateExtractor requiredRateExtractor;
+    private final ExternalApiDtoClassesDataStorage storage;
 
     @Override
     public Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName externalApiName,
@@ -37,7 +39,8 @@ public class RestTemplateRateDao implements RateDao {
         var externalApiRateUrl = urlService.generateRateUrlByExternalApiNameAndCurrencyAndDate(param);
         var responseBody = externalApiCaller.call(externalApiRateUrl);
 
-        var dtoClass = externalApiName.getExternalApiProperty().getProperty().getRateDtoClass();
+
+        var dtoClass = storage.getByExternalApiName(externalApiName).getRateDto();
         var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
         externalApiDto = extractRequiredExternalApiRateIfRateRepresentingJsonArray(externalApiDto, param);
 

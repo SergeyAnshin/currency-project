@@ -2,6 +2,7 @@ package org.good.job.currency.project.dao.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.CurrencyDao;
+import org.good.job.currency.project.dto.storage.ExternalApiDtoClassesDataStorage;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralCurrency;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
@@ -27,13 +28,14 @@ public class RestTemplateCurrencyDao implements CurrencyDao {
     private final ExternalApiUrlService urlService;
     private final CurrencyMapper currencyMapper;
     private final ExternalApiDtoMapper externalApiDtoMapper;
+    private final ExternalApiDtoClassesDataStorage storage;
 
     @Override
     public List<GeneralCurrency> findByExternalApiName(ExternalApiName externalApiName) {
         var param = ExternalApiUrl.builder().externalApiName(externalApiName).build();
         var externalApiRateUrl = urlService.generateCurrencyUrlByExternalApiName(param);
         var responseBody = externalApiCaller.call(externalApiRateUrl);
-        Class<?> dtoClass = externalApiName.getExternalApiProperty().getProperty().getCurrencyDtoClass();
+        Class<?> dtoClass = storage.getByExternalApiName(externalApiName).getCurrencyDto();
         Object externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
         TreeSet<GeneralCurrency> sortedGeneralCurrencies = new TreeSet<>(
                 currencyMapper.currencyDtoListToCurrencyList(externalApiDto).getRates());

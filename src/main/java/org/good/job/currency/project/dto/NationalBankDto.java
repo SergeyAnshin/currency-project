@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.good.job.currency.project.dto.enums.ConstCurrency;
+import org.good.job.currency.project.dto.storage.annotation.AssignedExternalApiDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
+
+import static org.good.job.currency.project.entity.enums.ExternalApiName.NATIONAL_BANK;
 
 
 @NoArgsConstructor
@@ -16,6 +19,9 @@ import java.util.Currency;
 @Getter
 @Setter
 @ToString
+
+@AssignedExternalApiDto(externalApi = NATIONAL_BANK, currencyDto = NationalBankDtoList.class,
+        rateDto = NationalBankDto.class)
 public class NationalBankDto extends GeneralExternalApiDto implements Checkable {
 
     @JsonAlias({ "Cur_ID" })
