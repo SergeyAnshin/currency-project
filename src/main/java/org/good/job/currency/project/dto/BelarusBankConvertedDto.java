@@ -5,17 +5,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.good.job.currency.project.dto.enums.ConstCurrency;
+import org.good.job.currency.project.dto.storage.annotation.AssignedExternalApiDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
+
+import static org.good.job.currency.project.entity.enums.ExternalApiName.BELARUS_BANK;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
+
+@AssignedExternalApiDto(externalApi = BELARUS_BANK, currencyDto = BelarusBankDtoList.class,
+        rateDto = BelarusBankDtoList.class)
 public class BelarusBankConvertedDto extends GeneralExternalApiDto implements Checkable {
+
     private LocalDateTime date;
     private String sellCurrencyCode;
     private final String buyCurrencyCode = ConstCurrency.BYN.toString();
