@@ -24,7 +24,7 @@ class ExternalApiUrlParameterConverterImplTest {
     void convert() {
         var param = ExternalApiUrl.builder()
                 .externalApiName(ALFA_BANK)
-                .currency(Currency.getInstance("USD"))
+                .currency("USD")
                 .date(LocalDate.now())
                 .build();
 

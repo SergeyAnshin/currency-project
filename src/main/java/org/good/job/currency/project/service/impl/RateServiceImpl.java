@@ -13,7 +13,6 @@ import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Currency;
 import java.util.List;
 
 
@@ -28,10 +27,10 @@ public class RateServiceImpl implements RateService {
 
     @Override
     public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName,
-                                                                  Currency currency,
+                                                                  String currencyCode,
                                                                   LocalDate date) {
-        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, currency)) {
-            return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(externalApiName, currency, date)
+        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, currencyCode)) {
+            return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(externalApiName, currencyCode, date)
                     .orElseThrow(RateNotFoundException::new);
         } else {
             throw new CurrencyNotSupportedByExternalApiException();
@@ -39,17 +38,17 @@ public class RateServiceImpl implements RateService {
     }
 
     @Override
-    public RateStatisticData getStatistics(ExternalApiName externalApiName, String currency, LocalDate startDate,
+    public RateStatisticData getStatistics(ExternalApiName externalApiName, String currencyCode, LocalDate startDate,
                                            LocalDate endDate) {
         var generalRates =
-                getRateByExternalApiNameAndCurrencyAndDateRange(externalApiName, currency, startDate, endDate);
+                getRateByExternalApiNameAndCurrencyAndDateRange(externalApiName, currencyCode, startDate, endDate);
         return statisticService.getStatistics(generalRates);
 
     }
 
     @Override
     public List<GeneralRate> getRateByExternalApiNameAndCurrencyAndDateRange(ExternalApiName externalApiName,
-                                                                             String currency, LocalDate startDate,
+                                                                             String currencyCode, LocalDate startDate,
                                                                              LocalDate endDate) {
         return null;
     }

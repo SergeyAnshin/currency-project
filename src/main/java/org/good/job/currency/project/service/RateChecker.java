@@ -1,11 +1,11 @@
 package org.good.job.currency.project.service;
 
-import org.good.job.currency.project.dto.GeneralExternalApiDto;
 import org.good.job.currency.project.dto.Checkable;
+import org.good.job.currency.project.dto.GeneralExternalApiDto;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 
 import java.time.LocalDate;
-import java.util.Currency;
+import java.util.Objects;
 
 
 public interface RateChecker {
@@ -16,8 +16,8 @@ public interface RateChecker {
         return rate.getDateOfRate().equals(date);
     }
 
-    default boolean isMatchingByCurrency(Checkable rate, Currency currency) {
-        return rate.getSellCurrencyCode().equals(currency.getCurrencyCode());
+    default boolean isMatchingByCurrency(Checkable rate, String currencyCode) {
+        return Objects.equals(rate.getSellCurrencyCode(), currencyCode);
     }
 
 }

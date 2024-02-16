@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.util.Currency;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,16 +45,17 @@ class RateControllerTest {
     @Test
     public void returnNotFoundIfCurrencyNotSupportedByExternalApi() throws Exception {
         var externalApiName = ExternalApiName.ALFA_BANK.toString();
-        var currency = Currency.getInstance("JPY");
+        var currencyCode = "JPY";
         var currentDate = LocalDate.now();
 
-        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency, currentDate))
+        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currencyCode,
+                                                                    currentDate))
                 .thenThrow(CurrencyNotSupportedByExternalApiException.class);
 
         mockMvc.perform(get(RATE_CONTROLLER_BASE_URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .param("externalApiName", externalApiName)
-                                .param("currency", currency.getCurrencyCode())
+                                .param("currency", currencyCode)
                                 .param("date", currentDate.toString()))
                 .andExpect(status().isNotFound());
     }
@@ -63,17 +63,17 @@ class RateControllerTest {
     @Test
     public void returnNotFoundIfRateNotFound() throws Exception {
         var externalApiName = ExternalApiName.ALFA_BANK.toString();
-        var currency = Currency.getInstance("USD");
+        var currencyCode = "USD";
         var dateBeyondServiceExistence = LocalDate.of(2023, 2, 9);
 
-        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currency,
+        when(rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currencyCode,
                                                                     dateBeyondServiceExistence))
                 .thenThrow(RateNotFoundException.class);
 
         mockMvc.perform(get(RATE_CONTROLLER_BASE_URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .param("externalApiName", externalApiName)
-                                .param("currency", currency.getCurrencyCode())
+                                .param("currency", currencyCode)
                                 .param("date", dateBeyondServiceExistence.toString()))
                 .andExpect(status().isNotFound());
     }

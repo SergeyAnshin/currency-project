@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface RateDao {
 
     Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName externalApiName,
-                                                                      Currency currencyCode,
+                                                                      String currencyCode,
                                                                       LocalDate date);
 
 }

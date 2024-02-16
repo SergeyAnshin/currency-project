@@ -33,12 +33,12 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
                 .getExternalApiProperty()
                 .getProperty()
                 .getRateByCurrencyCodeAndDateCode();
-        var currencyCode = param.getCurrency().getCurrencyCode();
+        var currencyCode = param.getCurrency();
         var date = param.getDate();
-        return getUrlWithParamsByMessageCode(urlMessageCode, new Object[]{currencyCode, date});
+        return getUrlWithParamsByMessageCode(urlMessageCode, new Object[]{ currencyCode, date });
     }
 
-    private String getUrlWithParamsByMessageCode(String urlMessageCode, Object[] params){
+    private String getUrlWithParamsByMessageCode(String urlMessageCode, Object[] params) {
         try {
             var url = messageSource.getMessage(urlMessageCode, params, Locale.US);
             if (!url.isBlank()) {
@@ -49,4 +49,5 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
             throw new RateByDateAndCurrencyNotSupportedByApiException();
         }
     }
+
 }

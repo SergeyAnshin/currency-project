@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.Currency;
 
+
+/**
+ * Add currencyValidation
+ */
 
 @RequiredArgsConstructor
 
@@ -30,18 +33,18 @@ public class RateController {
 
     @GetMapping
     public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam ExternalApiName externalApiName,
-                                                                        @RequestParam Currency currency,
+                                                                        @RequestParam String currencyCode,
                                                                         @RequestParam @PastOrPresent LocalDate date) {
-        var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(externalApiName, currency, date);
+        var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(externalApiName, currencyCode, date);
         return ResponseEntity.ok(rate);
     }
 
     @GetMapping("/statistics")
     public ResponseEntity<RateStatisticData> getCurrencyRateStatistics(@RequestParam ExternalApiName externalApiName,
-                                                                       @RequestParam String currency,
+                                                                       @RequestParam String currencyCode,
                                                                        @RequestParam @Past LocalDate startDate,
                                                                        @RequestParam @PastOrPresent LocalDate endDate) {
-        var rateStatistics = rateService.getStatistics(externalApiName, currency, startDate, endDate);
+        var rateStatistics = rateService.getStatistics(externalApiName, currencyCode, startDate, endDate);
         return ResponseEntity.ok(rateStatistics);
     }
 

@@ -33,7 +33,7 @@ public class RestTemplateRateDao implements RateDao {
 
     @Override
     public Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName externalApiName,
-                                                                             Currency currencyCode, LocalDate date) {
+                                                                             String currencyCode, LocalDate date) {
         var param = ExternalApiUrl.builder().externalApiName(externalApiName).currency(currencyCode).date(date).build();
 
         var externalApiRateUrl = urlService.generateRateUrlByExternalApiNameAndCurrencyAndDate(param);
