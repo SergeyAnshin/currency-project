@@ -4,12 +4,13 @@ import org.good.job.currency.project.dto.AlfaBankDto;
 import org.good.job.currency.project.dto.Checkable;
 import org.good.job.currency.project.dto.GeneralExternalApiDto;
 import org.good.job.currency.project.dto.enums.ConstCurrency;
-import org.good.job.currency.project.entity.ExternalApiUrl;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.service.RateChecker;
 import org.good.job.currency.project.service.annotation.AssignedClass;
 import org.springframework.stereotype.Service;
 
 import java.util.Currency;
+import java.util.Objects;
 
 
 @AssignedClass(AlfaBankDto.class)
@@ -17,11 +18,13 @@ import java.util.Currency;
 @Service
 public class AlfaBankRateChecker implements RateChecker {
 
+    // TODO если изменится локальная переменная ?
     @Override
-    public boolean isRateMatchParameters(GeneralExternalApiDto externalApiRate, ExternalApiUrl externalApiUrl) {
+    public boolean isRateMatchParameters(GeneralExternalApiDto externalApiRate,
+                                         UserRequestParametersData userRequestParameters) {
         if (externalApiRate instanceof Checkable rate) {
-            return isMatchingByCurrency(rate, externalApiUrl.getCurrency())
-                    && isMatchingByDate(rate, externalApiUrl.getDate())
+            return isMatchingByCurrency(rate, userRequestParameters.getCurrency())
+                    && isMatchingByDate(rate, userRequestParameters.getDate())
                     && isMatchingUserLocalCurrency(rate, Currency.getInstance(ConstCurrency.BYN.toString()));
         } else {
             throw new IllegalArgumentException();
@@ -29,7 +32,7 @@ public class AlfaBankRateChecker implements RateChecker {
     }
 
     private boolean isMatchingUserLocalCurrency(Checkable rate, Currency userLocaleCurrency) {
-        return rate.getBuyCurrencyCode().equals(userLocaleCurrency.getCurrencyCode());
+        return Objects.equals(rate.getBuyCurrencyCode(), userLocaleCurrency.getCurrencyCode());
     }
 
 }

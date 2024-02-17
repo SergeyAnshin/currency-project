@@ -3,7 +3,7 @@ package org.good.job.currency.project.service.mapper;
 import org.good.job.currency.project.dto.AlfaBankDto;
 import org.good.job.currency.project.dto.BelarusBankDto;
 import org.good.job.currency.project.dto.NationalBankDto;
-import org.good.job.currency.project.entity.ExternalApiUrl;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ class RateMapperTest {
 
     @Test
     void mapperCorrectlyMapsRatesForAlfaBank() {
-        var externalApiUrl = ExternalApiUrl.builder().build();
+        var externalApiUrl = UserRequestParametersData.builder().build();
         var sellRate = 3.38;
         var buyRate = 3.53;
         var alfaBankExternalApiDto = AlfaBankDto.builder()
@@ -45,7 +45,7 @@ class RateMapperTest {
 
     @Test
     void mapperCorrectlyMapsRatesForNbrb() {
-        var externalApiUrl = ExternalApiUrl.builder().build();
+        var externalApiUrl = UserRequestParametersData.builder().build();
         var sellRate = 3.2253;
         var buyRate = 0;
         var nbrbExternalApiDto = NationalBankDto.builder()
@@ -64,7 +64,7 @@ class RateMapperTest {
 
     @Test
     void mapperCorrectlyMapsRatesForBelarusBank() {
-        var externalApiUrl = ExternalApiUrl.builder().currency("USD").build();
+        var externalApiUrl = UserRequestParametersData.builder().currency("USD").build();
         var sellRate = 3.245;
         var buyRate = 3.185;
         var belarusBankRateExternalApiDto = BelarusBankDto.builder()

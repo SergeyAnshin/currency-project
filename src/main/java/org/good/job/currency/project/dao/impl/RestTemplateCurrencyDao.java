@@ -3,18 +3,16 @@ package org.good.job.currency.project.dao.impl;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.CurrencyDao;
 import org.good.job.currency.project.dto.storage.ExternalApiDtoClassesDataStorage;
-import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.entity.GeneralCurrency;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.ExternalApiCaller;
 import org.good.job.currency.project.service.ExternalApiDtoMapper;
 import org.good.job.currency.project.service.ExternalApiUrlService;
 import org.good.job.currency.project.service.mapper.CurrencyMapper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -32,7 +30,7 @@ public class RestTemplateCurrencyDao implements CurrencyDao {
 
     @Override
     public List<GeneralCurrency> findByExternalApiName(ExternalApiName externalApiName) {
-        var param = ExternalApiUrl.builder().externalApiName(externalApiName).build();
+        var param = UserRequestParametersData.builder().externalApiName(externalApiName).build();
         var externalApiRateUrl = urlService.generateCurrencyUrlByExternalApiName(param);
         var responseBody = externalApiCaller.call(externalApiRateUrl);
         Class<?> dtoClass = storage.getByExternalApiName(externalApiName).getCurrencyDto();
