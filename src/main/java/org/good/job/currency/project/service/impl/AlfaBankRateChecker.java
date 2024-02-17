@@ -6,7 +6,7 @@ import org.good.job.currency.project.dto.GeneralExternalApiDto;
 import org.good.job.currency.project.dto.enums.ConstCurrency;
 import org.good.job.currency.project.entity.ExternalApiUrl;
 import org.good.job.currency.project.service.RateChecker;
-import org.good.job.currency.project.service.annotations.AssignedClass;
+import org.good.job.currency.project.service.annotation.AssignedClass;
 import org.springframework.stereotype.Service;
 
 import java.util.Currency;

@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dto.GeneralExternalApiDto;
 import org.good.job.currency.project.service.RateChecker;
-import org.good.job.currency.project.service.annotations.AssignedClass;
+import org.good.job.currency.project.service.annotation.AssignedClass;
 import org.good.job.currency.project.service.exception.AssignedClassMissingException;
 import org.springframework.stereotype.Service;
 
