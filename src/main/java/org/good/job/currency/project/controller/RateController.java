@@ -5,6 +5,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.RateService;
 import org.good.job.currency.project.service.validation.annotation.SupportedCurrencyCode;
@@ -33,7 +34,13 @@ public class RateController {
                                                                         @RequestParam @SupportedCurrencyCode
                                                                         String currencyCode,
                                                                         @RequestParam @PastOrPresent LocalDate date) {
-        var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(externalApiName, currencyCode, date);
+        var userRequestParameters = UserRequestParametersData.builder()
+                .externalApiName(externalApiName)
+                .targetCurrencyCode(currencyCode)
+                .localCurrencyCode("BYN")
+                .date(date)
+                .build();
+        var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(userRequestParameters);
         return ResponseEntity.ok(rate);
     }
 

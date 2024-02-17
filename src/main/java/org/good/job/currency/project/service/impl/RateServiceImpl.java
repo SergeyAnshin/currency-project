@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.RateService;
@@ -26,11 +27,11 @@ public class RateServiceImpl implements RateService {
     private final StatisticService statisticService;
 
     @Override
-    public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName,
-                                                                  String currencyCode,
-                                                                  LocalDate date) {
-        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, currencyCode)) {
-            return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(externalApiName, currencyCode, date)
+    public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(UserRequestParametersData userRequestParameters) {
+        var externalApiName = userRequestParameters.getExternalApiName();
+        var targetCurrencyCode = userRequestParameters.getTargetCurrencyCode();
+        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, targetCurrencyCode)) {
+            return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(userRequestParameters)
                     .orElseThrow(RateNotFoundException::new);
         } else {
             throw new CurrencyNotSupportedByExternalApiException();

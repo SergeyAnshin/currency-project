@@ -2,6 +2,7 @@ package org.good.job.currency.project.service.impl;
 
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Currency;
 import java.util.Optional;
 
+import static org.good.job.currency.project.entity.enums.ExternalApiName.ALFA_BANK;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -32,16 +34,22 @@ class RateServiceImplTest {
 
     @Test
     void getRateByExternalApiNameAndCurrencyAndDateMethodNotChangeExistingRate() {
+        var externalApiName = ALFA_BANK;
         var currencyCode = "JPY";
         var currentDate = LocalDate.now();
         var existingRate = GeneralRate.builder().buyRate(1.1).sellRate(2.1).build();
+        var userRequestParameters = UserRequestParametersData.builder()
+                .externalApiName(externalApiName)
+                .targetCurrencyCode(currencyCode)
+                .localCurrencyCode("BYN")
+                .date(currentDate)
+                .build();
 
-        when(currencyService.isCurrencySupportedByExternalApi(ExternalApiName.ALFA_BANK, currencyCode)).thenReturn(true);
-        when(rateDao.findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName.ALFA_BANK, currencyCode, currentDate))
+        when(currencyService.isCurrencySupportedByExternalApi(externalApiName, currencyCode)).thenReturn(true);
+        when(rateDao.findByExternalApiNameAndCurrencyCodeAndDate(userRequestParameters))
                 .thenReturn(Optional.of(existingRate));
 
-        GeneralRate rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currencyCode,
-                                                                                  currentDate);
+        var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(userRequestParameters);
 
         assertAll(() -> {
             assertEquals(existingRate.getBuyRate(), rate.getBuyRate());
@@ -51,28 +59,39 @@ class RateServiceImplTest {
 
     @Test
     void getRateByExternalApiNameAndCurrencyAndDateMethodThrowExceptionIfCurrencyNotSupportedExternalApi() {
+        var externalApiName = ALFA_BANK;
         var currencyCode = "JPY";
         var currentDate = LocalDate.now();
-
-        when(currencyService.isCurrencySupportedByExternalApi(ExternalApiName.ALFA_BANK, currencyCode)).thenReturn(false);
+        var userRequestParameters = UserRequestParametersData.builder()
+                .externalApiName(externalApiName)
+                .targetCurrencyCode(currencyCode)
+                .localCurrencyCode("BYN")
+                .date(currentDate)
+                .build();
+        when(currencyService.isCurrencySupportedByExternalApi(externalApiName, currencyCode)).thenReturn(false);
 
         assertThrows(CurrencyNotSupportedByExternalApiException.class,
-                     () -> rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currencyCode,
-                                                                                  currentDate));
+                     () -> rateService.getRateByExternalApiNameAndCurrencyAndDate(userRequestParameters));
     }
 
     @Test
     void getRateByExternalApiNameAndCurrencyAndDateMethodThrowExceptionIfRateNotFound() {
+        var externalApiName = ALFA_BANK;
         var currencyCode = "JPY";
         var currentDate = LocalDate.now();
+        var userRequestParameters = UserRequestParametersData.builder()
+                .externalApiName(externalApiName)
+                .targetCurrencyCode(currencyCode)
+                .localCurrencyCode("BYN")
+                .date(currentDate)
+                .build();
 
-        when(currencyService.isCurrencySupportedByExternalApi(ExternalApiName.ALFA_BANK, currencyCode)).thenReturn(true);
-        when(rateDao.findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName.ALFA_BANK, currencyCode, currentDate))
+        when(currencyService.isCurrencySupportedByExternalApi(externalApiName, currencyCode)).thenReturn(true);
+        when(rateDao.findByExternalApiNameAndCurrencyCodeAndDate(userRequestParameters))
                 .thenReturn(Optional.empty());
 
         assertThrows(RateNotFoundException.class,
-                     () -> rateService.getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName.ALFA_BANK, currencyCode,
-                                                                                  currentDate));
+                     () -> rateService.getRateByExternalApiNameAndCurrencyAndDate(userRequestParameters));
     }
 
 }
