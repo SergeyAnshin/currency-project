@@ -8,6 +8,7 @@ import org.good.job.currency.project.dto.storage.annotation.AssignedExternalApiD
 
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.Objects;
 
 import static org.good.job.currency.project.entity.enums.ExternalApiName.ALFA_BANK;
 
@@ -48,6 +49,25 @@ public class AlfaBankDto extends GeneralExternalApiDto implements Checkable {
     @Override
     public LocalDate getDateOfRate() {
         return date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AlfaBankDto that = (AlfaBankDto) o;
+        return Double.compare(sellRate, that.sellRate) == 0 && sellCode == that.sellCode
+                && Double.compare(buyRate, that.buyRate) == 0 && buyCode == that.buyCode
+                && quantity == that.quantity && Objects.equals(sellCurrencyCode, that.sellCurrencyCode)
+                && Objects.equals(buyCurrencyCode, that.buyCurrencyCode) && Objects.equals(name,
+                                                                                           that.name)
+                && Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sellRate, sellCurrencyCode, sellCode, buyRate, buyCurrencyCode, buyCode, quantity, name,
+                            date);
     }
 
 }
