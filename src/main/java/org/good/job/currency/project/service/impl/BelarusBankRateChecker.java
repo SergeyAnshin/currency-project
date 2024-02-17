@@ -18,7 +18,7 @@ public class BelarusBankRateChecker implements RateChecker {
     public boolean isRateMatchParameters(GeneralExternalApiDto externalApiRate,
                                          UserRequestParametersData userRequestParameters) {
         if (externalApiRate instanceof Checkable rate) {
-            return isMatchingByCurrency(rate, userRequestParameters.getCurrency())
+            return isMatchingByCurrency(rate, userRequestParameters.getTargetCurrencyCode())
                     && isMatchingByDate(rate, userRequestParameters.getDate());
         } else {
             throw new IllegalArgumentException();

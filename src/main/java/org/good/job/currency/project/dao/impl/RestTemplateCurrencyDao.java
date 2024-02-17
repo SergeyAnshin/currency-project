@@ -36,7 +36,7 @@ public class RestTemplateCurrencyDao implements CurrencyDao {
         Class<?> dtoClass = storage.getByExternalApiName(externalApiName).getCurrencyDto();
         Object externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
         TreeSet<GeneralCurrency> sortedGeneralCurrencies = new TreeSet<>(
-                currencyMapper.currencyDtoListToCurrencyList(externalApiDto).getRates());
+                currencyMapper.currencyDtoListToCurrencyList(externalApiDto).getDtoList());
         return new ArrayList<>(sortedGeneralCurrencies);
     }
 

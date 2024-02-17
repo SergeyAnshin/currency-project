@@ -18,11 +18,11 @@ import java.util.List;
 public class NationalBankDtoList implements ArrayDto<NationalBankDto> {
 
 
-    private List<NationalBankDto> rates;
+    private List<NationalBankDto> dtoList;
 
     @Override
     public List<NationalBankDto> getListDto() {
-        return rates;
+        return dtoList;
     }
 
 }

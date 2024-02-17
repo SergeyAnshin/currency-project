@@ -1,7 +1,6 @@
 package org.good.job.currency.project.dto;
 
 import java.time.LocalDate;
-import java.util.Currency;
 
 
 public interface Checkable {
@@ -11,7 +10,5 @@ public interface Checkable {
     String getBuyCurrencyCode();
 
     LocalDate getDateOfRate();
-
-    Currency getLocalCurrency();
 
 }

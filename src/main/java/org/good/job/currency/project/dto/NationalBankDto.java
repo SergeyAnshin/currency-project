@@ -8,7 +8,6 @@ import org.good.job.currency.project.dto.storage.annotation.AssignedExternalApiD
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Currency;
 
 import static org.good.job.currency.project.entity.enums.ExternalApiName.NATIONAL_BANK;
 
@@ -57,11 +56,6 @@ public class NationalBankDto extends GeneralExternalApiDto implements Checkable 
     @Override
     public LocalDate getDateOfRate() {
         return LocalDate.from(date);
-    }
-
-    @Override
-    public Currency getLocalCurrency() {
-        return Currency.getInstance("BYN");
     }
 
 }

@@ -33,7 +33,7 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
                 .getExternalApiProperty()
                 .getProperty()
                 .getRateByCurrencyCodeAndDateCode();
-        var currencyCode = userRequestParameters.getCurrency();
+        var currencyCode = userRequestParameters.getTargetCurrencyCode();
         var date = userRequestParameters.getDate();
         return getUrlWithParamsByMessageCode(urlMessageCode, new Object[]{ currencyCode, date });
     }

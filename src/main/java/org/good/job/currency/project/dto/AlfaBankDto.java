@@ -50,9 +50,4 @@ public class AlfaBankDto extends GeneralExternalApiDto implements Checkable {
         return date;
     }
 
-    @Override
-    public Currency getLocalCurrency() {
-        return Currency.getInstance("BYN");
-    }
-
 }

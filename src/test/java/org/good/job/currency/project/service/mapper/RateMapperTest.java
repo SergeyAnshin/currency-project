@@ -64,7 +64,7 @@ class RateMapperTest {
 
     @Test
     void mapperCorrectlyMapsRatesForBelarusBank() {
-        var externalApiUrl = UserRequestParametersData.builder().currency("USD").build();
+        var externalApiUrl = UserRequestParametersData.builder().targetCurrencyCode("USD").build();
         var sellRate = 3.245;
         var buyRate = 3.185;
         var belarusBankRateExternalApiDto = BelarusBankDto.builder()

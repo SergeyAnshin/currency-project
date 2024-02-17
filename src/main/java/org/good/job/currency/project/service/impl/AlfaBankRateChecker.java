@@ -23,16 +23,16 @@ public class AlfaBankRateChecker implements RateChecker {
     public boolean isRateMatchParameters(GeneralExternalApiDto externalApiRate,
                                          UserRequestParametersData userRequestParameters) {
         if (externalApiRate instanceof Checkable rate) {
-            return isMatchingByCurrency(rate, userRequestParameters.getCurrency())
+            return isMatchingByCurrency(rate, userRequestParameters.getTargetCurrencyCode())
                     && isMatchingByDate(rate, userRequestParameters.getDate())
-                    && isMatchingUserLocalCurrency(rate, Currency.getInstance(ConstCurrency.BYN.toString()));
+                    && isMatchingUserLocalCurrency(rate, userRequestParameters.getLocalCurrencyCode());
         } else {
             throw new IllegalArgumentException();
         }
     }
 
-    private boolean isMatchingUserLocalCurrency(Checkable rate, Currency userLocaleCurrency) {
-        return Objects.equals(rate.getBuyCurrencyCode(), userLocaleCurrency.getCurrencyCode());
+    private boolean isMatchingUserLocalCurrency(Checkable rate, String userLocaleCurrency) {
+        return Objects.equals(rate.getBuyCurrencyCode(), userLocaleCurrency);
     }
 
 }

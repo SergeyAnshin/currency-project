@@ -20,7 +20,7 @@ public class NbrbCurrencyListDeserializer extends JsonDeserializer<NationalBankD
             IOException {
         var treeNode = jsonParser.readValueAsTree();
         var nbrbRates = deserializationContext.readTreeAsValue((JsonNode) treeNode, NationalBankDto[].class);
-        return NationalBankDtoList.builder().rates(List.of(nbrbRates)).build();
+        return NationalBankDtoList.builder().dtoList(List.of(nbrbRates)).build();
     }
 
 }

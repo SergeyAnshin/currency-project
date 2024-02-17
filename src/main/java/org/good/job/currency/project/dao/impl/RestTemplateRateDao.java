@@ -3,6 +3,7 @@ package org.good.job.currency.project.dao.impl;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.dto.ArrayDto;
+import org.good.job.currency.project.dto.enums.ConstCurrency;
 import org.good.job.currency.project.dto.storage.ExternalApiDtoClassesDataStorage;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.UserRequestParametersData;
@@ -30,12 +31,14 @@ public class RestTemplateRateDao implements RateDao {
     private final RequiredExternalApiRateExtractor requiredRateExtractor;
     private final ExternalApiDtoClassesDataStorage storage;
 
+    // TODO move userRequestParameters -> controller
     @Override
     public Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(ExternalApiName externalApiName,
                                                                              String currencyCode, LocalDate date) {
         var userRequestParameters = UserRequestParametersData.builder()
                 .externalApiName(externalApiName)
-                .currency(currencyCode)
+                .targetCurrencyCode(currencyCode)
+                .localCurrencyCode(ConstCurrency.BYN.name())
                 .date(date)
                 .build();
 

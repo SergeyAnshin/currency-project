@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class CurrencyList {
-    private List<GeneralCurrency> rates;
+    private List<GeneralCurrency> dtoList;
 }
