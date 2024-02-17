@@ -12,6 +12,8 @@ import java.util.Currency;
 
 import static org.good.job.currency.project.entity.enums.ExternalApiName.NATIONAL_BANK;
 
+// TODO NationalBank of witch country ?
+
 
 @NoArgsConstructor
 @AllArgsConstructor

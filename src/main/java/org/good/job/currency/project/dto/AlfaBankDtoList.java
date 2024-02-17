@@ -14,11 +14,11 @@ import java.util.List;
 @ToString
 public class AlfaBankDtoList implements ArrayDto<AlfaBankDto> {
 
-    List<AlfaBankDto> rates;
+    private List<AlfaBankDto> alfaBankDtos;
 
     @Override
     public List<AlfaBankDto> getListDto() {
-        return rates;
+        return alfaBankDtos;
     }
 
 }

@@ -17,11 +17,11 @@ import java.util.List;
 @JsonDeserialize(using = BelarusBankRateListDeserializer.class)
 public class BelarusBankDtoList implements ArrayDto<BelarusBankConvertedDto> {
 
-    List<BelarusBankConvertedDto> rates;
+    private List<BelarusBankConvertedDto> belarusBankDtos;
 
     @Override
     public List<BelarusBankConvertedDto> getListDto() {
-        return rates;
+        return belarusBankDtos;
     }
 
 }

@@ -27,7 +27,7 @@ public class BelarusBankRateListDeserializer extends JsonDeserializer<BelarusBan
         for (BelarusBankDto belarusBankDto : belarusBankRates) {
             belarusBankConvertedDtoList.addAll(convertBelarusBankDtoToList(belarusBankDto));
         }
-        return BelarusBankDtoList.builder().rates(belarusBankConvertedDtoList).build();
+        return BelarusBankDtoList.builder().belarusBankDtos(belarusBankConvertedDtoList).build();
     }
 
     // TODO сделать разбор полей через рефлексию

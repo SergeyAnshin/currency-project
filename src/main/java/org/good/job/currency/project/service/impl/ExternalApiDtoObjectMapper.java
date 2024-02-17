@@ -14,7 +14,7 @@ public class ExternalApiDtoObjectMapper implements ExternalApiDtoMapper {
 
     private final ObjectMapper objectMapper;
 
-    public <T> T responseBodyToExternalApiDto(String responseBody, Class<T> externalApiDtoClass) {
+    public Object responseBodyToExternalApiDto(String responseBody, Class<?> externalApiDtoClass) {
         try {
             return objectMapper.readValue(responseBody, externalApiDtoClass);
         } catch (JsonProcessingException e) {

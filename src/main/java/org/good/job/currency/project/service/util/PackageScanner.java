@@ -14,6 +14,8 @@ public class PackageScanner {
     public static final String ROOT_JAVA_PACKAGE_PATH = "src/main/java/";
     public static final String JAVA_FILE_FORMAT = ".java";
     private static final int JAVA_FILE_FORMAT_LENGTH = 5;
+    public static final String BACKSLASH_SYMBOL = "\\\\";
+    public static final String DOT_SYMBOL = ".";
 
     public static List<? extends Class<?>> getAllJavaClassesInPackageMarkedWithAnnotation(String packageStringPath,
                                                                                           Class<? extends Annotation> annotation) {
@@ -55,7 +57,7 @@ public class PackageScanner {
     }
 
     private static String replacePathSlashesWithDots(String pathString) {
-        return pathString.replaceAll("\\\\", ".");
+        return pathString.replaceAll(BACKSLASH_SYMBOL, DOT_SYMBOL);
     }
 
 }

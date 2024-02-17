@@ -16,12 +16,15 @@ import java.util.stream.Collectors;
 @Service
 public class ExternalApiEnumService implements ExternalApiService {
 
+    public static final String ENUM_WORDS_DELIMITER = "_";
+    public static final String WHITESPACE_CHARACTER = " ";
+
     @Override
     public List<String> getAvailableExternalApis() {
         return Arrays.stream(ExternalApiName.values())
                 .map(Enum::name)
                 .map(String::toLowerCase)
-                .map(externalApiName -> externalApiName.replaceAll("_", " "))
+                .map(externalApiName -> externalApiName.replaceAll(ENUM_WORDS_DELIMITER, WHITESPACE_CHARACTER))
                 .map(StringUtils::capitalize)
                 .collect(Collectors.toList());
     }
