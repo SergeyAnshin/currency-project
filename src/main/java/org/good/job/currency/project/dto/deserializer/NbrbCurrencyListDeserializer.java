@@ -1,4 +1,4 @@
-package org.good.job.currency.project.dto.deserializers;
+package org.good.job.currency.project.dto.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -20,7 +20,7 @@ public class NbrbCurrencyListDeserializer extends JsonDeserializer<NationalBankD
             IOException {
         var treeNode = jsonParser.readValueAsTree();
         var nbrbRates = deserializationContext.readTreeAsValue((JsonNode) treeNode, NationalBankDto[].class);
-        return NationalBankDtoList.builder().rates(List.of(nbrbRates)).build();
+        return NationalBankDtoList.builder().dtoList(List.of(nbrbRates)).build();
     }
 
 }

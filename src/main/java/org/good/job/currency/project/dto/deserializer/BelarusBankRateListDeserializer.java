@@ -1,4 +1,4 @@
-package org.good.job.currency.project.dto.deserializers;
+package org.good.job.currency.project.dto.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -18,7 +18,6 @@ import java.util.List;
 @Component
 public class BelarusBankRateListDeserializer extends JsonDeserializer<BelarusBankDtoList> {
 
-
     @Override
     public BelarusBankDtoList deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         var treeNode = p.readValueAsTree();
@@ -27,7 +26,7 @@ public class BelarusBankRateListDeserializer extends JsonDeserializer<BelarusBan
         for (BelarusBankDto belarusBankDto : belarusBankRates) {
             belarusBankConvertedDtoList.addAll(convertBelarusBankDtoToList(belarusBankDto));
         }
-        return BelarusBankDtoList.builder().rates(belarusBankConvertedDtoList).build();
+        return BelarusBankDtoList.builder().dtoList(belarusBankConvertedDtoList).build();
     }
 
     // TODO сделать разбор полей через рефлексию

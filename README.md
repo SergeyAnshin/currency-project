@@ -13,7 +13,8 @@ This project allows you to:
 1. **Get a list of all available external APIs** that provide exchange rates data.
    Just send a GET request to `http://localhost:8080/apis` and you will receive a JSON response with an array containing the name of an external API.
 2. **Get a list of all available currencies for a given external API**.
-   Send a GET request to `http://localhost:8080/currencies` with the name of the external API as a parameter and you will receive a JSON response with an array of currency codes (ISO 4217).
+   Send a GET request to `http://localhost:8080/api/banks/{externalApiName}/currencies` with the name of the external API as a parameter and you will receive a JSON response with an array of currency codes (ISO 4217).
+   For example, `http://localhost:8080/api/banks/ALFA_BANK/currencies`.
 3. **Get the exchange rate of a specific currency from a specific external API for a specific date**.
    Send a GET request to `http://localhost:8080/rates` with the name of the external API, the currency code (ISO 4217), and the date in YYYY-MM-DD format as parameters.
    For example, `http://localhost:8080/rates?externalApiName=ALFA_BANK&currency=EUR&date=2024-02-13`.

@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dto.GeneralExternalApiDto;
 import org.good.job.currency.project.service.RateChecker;
-import org.good.job.currency.project.service.annotations.AssignedClass;
+import org.good.job.currency.project.service.annotation.AssignedClass;
 import org.good.job.currency.project.service.exception.AssignedClassMissingException;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ public class RateCheckFactory {
         for (RateChecker rateChecker : rateCheckers) {
             var assignedClassAnnotation = rateChecker.getClass().getAnnotation(AssignedClass.class);
             if (nonNull(assignedClassAnnotation)) {
-                Class<?> externalApiRateClass = assignedClassAnnotation.value();
-                String externalApiRateSimpleName = externalApiRateClass.getSimpleName();
+                var externalApiRateClass = assignedClassAnnotation.value();
+                var externalApiRateSimpleName = externalApiRateClass.getSimpleName();
                 rateCheckerByExternalApiRateSimpleName.put(externalApiRateSimpleName, rateChecker);
             } else {
                 throw new AssignedClassMissingException();
@@ -37,7 +37,7 @@ public class RateCheckFactory {
     }
 
     public RateChecker getRateCheckerByRateDtoClass(Class<? extends GeneralExternalApiDto> externalApiRate) {
-        String externalApiRateSimpleName = externalApiRate.getSimpleName();
+        var externalApiRateSimpleName = externalApiRate.getSimpleName();
         return rateCheckerByExternalApiRateSimpleName.get(externalApiRateSimpleName);
     }
 

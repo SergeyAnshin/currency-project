@@ -12,5 +12,5 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString
-public abstract class GeneralExternalApiDto extends ExternalApiDto {
+public abstract class GeneralExternalApiDto {
 }

@@ -1,13 +1,14 @@
 package org.good.job.currency.project.service;
 
-import org.good.job.currency.project.entity.ExternalApiUrl;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 
 
 //TODO Можно сделать один общий метод
 public interface ExternalApiUrlService {
-    String generateCurrencyUrlByExternalApiName(ExternalApiUrl param);
 
-    String generateRateUrlByExternalApiNameAndCurrencyAndDate(ExternalApiUrl param);
+    String generateCurrencyUrlByExternalApiName(UserRequestParametersData userRequestParameters);
+
+    String generateRateUrlByExternalApiNameAndCurrencyAndDate(UserRequestParametersData userRequestParameters);
 
 
 }

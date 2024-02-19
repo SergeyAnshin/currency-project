@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.RateService;
@@ -13,7 +14,6 @@ import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Currency;
 import java.util.List;
 
 
@@ -27,11 +27,11 @@ public class RateServiceImpl implements RateService {
     private final StatisticService statisticService;
 
     @Override
-    public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(ExternalApiName externalApiName,
-                                                                  Currency currency,
-                                                                  LocalDate date) {
-        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, currency)) {
-            return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(externalApiName, currency, date)
+    public GeneralRate getRateByExternalApiNameAndCurrencyAndDate(UserRequestParametersData userRequestParameters) {
+        var externalApiName = userRequestParameters.getExternalApiName();
+        var targetCurrencyCode = userRequestParameters.getTargetCurrencyCode();
+        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, targetCurrencyCode)) {
+            return rateDao.findByExternalApiNameAndCurrencyCodeAndDate(userRequestParameters)
                     .orElseThrow(RateNotFoundException::new);
         } else {
             throw new CurrencyNotSupportedByExternalApiException();
@@ -39,17 +39,17 @@ public class RateServiceImpl implements RateService {
     }
 
     @Override
-    public RateStatisticData getStatistics(ExternalApiName externalApiName, String currency, LocalDate startDate,
+    public RateStatisticData getStatistics(ExternalApiName externalApiName, String currencyCode, LocalDate startDate,
                                            LocalDate endDate) {
         var generalRates =
-                getRateByExternalApiNameAndCurrencyAndDateRange(externalApiName, currency, startDate, endDate);
+                getRateByExternalApiNameAndCurrencyAndDateRange(externalApiName, currencyCode, startDate, endDate);
         return statisticService.getStatistics(generalRates);
 
     }
 
     @Override
     public List<GeneralRate> getRateByExternalApiNameAndCurrencyAndDateRange(ExternalApiName externalApiName,
-                                                                             String currency, LocalDate startDate,
+                                                                             String currencyCode, LocalDate startDate,
                                                                              LocalDate endDate) {
         return null;
     }

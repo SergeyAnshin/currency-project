@@ -8,6 +8,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
+import static org.good.job.currency.project.entity.enums.ProjectSymbol.BACKSLASH;
+import static org.good.job.currency.project.entity.enums.ProjectSymbol.DOT;
+
 
 public class PackageScanner {
 
@@ -50,12 +53,13 @@ public class PackageScanner {
 
     private static String convertPathToClassName(Path classPath) {
         var classPathString = classPath.toString();
-        var pathString = classPathString.substring(ROOT_JAVA_PACKAGE_PATH.length(), classPathString.length() - JAVA_FILE_FORMAT_LENGTH);
+        var pathString = classPathString.substring(ROOT_JAVA_PACKAGE_PATH.length(),
+                                                   classPathString.length() - JAVA_FILE_FORMAT_LENGTH);
         return replacePathSlashesWithDots(pathString);
     }
 
     private static String replacePathSlashesWithDots(String pathString) {
-        return pathString.replaceAll("\\\\", ".");
+        return pathString.replaceAll(BACKSLASH.getSymbol(), DOT.getSymbol());
     }
 
 }

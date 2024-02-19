@@ -1,7 +1,7 @@
 package org.good.job.currency.project.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.good.job.currency.project.entity.ExternalApiUrl;
+import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.service.ExternalApiUrlService;
 import org.good.job.currency.project.service.exception.RateByDateAndCurrencyNotSupportedByApiException;
 import org.springframework.context.MessageSource;
@@ -19,8 +19,8 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
     private final MessageSource messageSource;
 
     @Override
-    public String generateCurrencyUrlByExternalApiName(ExternalApiUrl param) {
-        String urlMessageCode = param.getExternalApiName()
+    public String generateCurrencyUrlByExternalApiName(UserRequestParametersData userRequestParameters) {
+        var urlMessageCode = userRequestParameters.getExternalApiName()
                 .getExternalApiProperty()
                 .getProperty()
                 .getCurrencyByExternalApiName();
@@ -28,17 +28,17 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
     }
 
     @Override
-    public String generateRateUrlByExternalApiNameAndCurrencyAndDate(ExternalApiUrl param) {
-        var urlMessageCode = param.getExternalApiName()
+    public String generateRateUrlByExternalApiNameAndCurrencyAndDate(UserRequestParametersData userRequestParameters) {
+        var urlMessageCode = userRequestParameters.getExternalApiName()
                 .getExternalApiProperty()
                 .getProperty()
                 .getRateByCurrencyCodeAndDateCode();
-        var currencyCode = param.getCurrency().getCurrencyCode();
-        var date = param.getDate();
-        return getUrlWithParamsByMessageCode(urlMessageCode, new Object[]{currencyCode, date});
+        var currencyCode = userRequestParameters.getTargetCurrencyCode();
+        var date = userRequestParameters.getDate();
+        return getUrlWithParamsByMessageCode(urlMessageCode, new Object[]{ currencyCode, date });
     }
 
-    private String getUrlWithParamsByMessageCode(String urlMessageCode, Object[] params){
+    private String getUrlWithParamsByMessageCode(String urlMessageCode, Object[] params) {
         try {
             var url = messageSource.getMessage(urlMessageCode, params, Locale.US);
             if (!url.isBlank()) {
@@ -49,4 +49,5 @@ public class ResourceBundleUrlService implements ExternalApiUrlService {
             throw new RateByDateAndCurrencyNotSupportedByApiException();
         }
     }
+
 }

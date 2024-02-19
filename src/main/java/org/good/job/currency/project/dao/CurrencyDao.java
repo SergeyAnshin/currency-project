@@ -7,5 +7,7 @@ import java.util.List;
 
 
 public interface CurrencyDao {
+
     List<GeneralCurrency> findByExternalApiName(ExternalApiName externalApiName);
+
 }

@@ -9,7 +9,6 @@ import org.good.job.currency.project.dto.storage.annotation.AssignedExternalApiD
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Currency;
 
 import static org.good.job.currency.project.entity.enums.ExternalApiName.BELARUS_BANK;
 
@@ -42,11 +41,6 @@ public class BelarusBankConvertedDto extends GeneralExternalApiDto implements Ch
     @Override
     public LocalDate getDateOfRate() {
         return LocalDate.from(date);
-    }
-
-    @Override
-    public Currency getLocalCurrency() {
-        return Currency.getInstance(buyCurrencyCode);
     }
 
 }

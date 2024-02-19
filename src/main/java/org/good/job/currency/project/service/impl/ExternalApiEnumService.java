@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.good.job.currency.project.entity.enums.ProjectSymbol.UNDERSCORE;
+import static org.good.job.currency.project.entity.enums.ProjectSymbol.WHITESPACE;
+
 
 @RequiredArgsConstructor
 
@@ -21,7 +24,7 @@ public class ExternalApiEnumService implements ExternalApiService {
         return Arrays.stream(ExternalApiName.values())
                 .map(Enum::name)
                 .map(String::toLowerCase)
-                .map(externalApiName -> externalApiName.replaceAll("_", " "))
+                .map(externalApiName -> externalApiName.replaceAll(UNDERSCORE.getSymbol(), WHITESPACE.getSymbol()))
                 .map(StringUtils::capitalize)
                 .collect(Collectors.toList());
     }

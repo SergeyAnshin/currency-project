@@ -1,4 +1,4 @@
-package org.good.job.currency.project.service.annotations;
+package org.good.job.currency.project.service.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

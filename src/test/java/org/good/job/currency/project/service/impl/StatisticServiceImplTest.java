@@ -1,8 +1,7 @@
-package org.good.job.currency.project.service;
+package org.good.job.currency.project.service.impl;
 
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
-import org.good.job.currency.project.service.impl.StatisticServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -3,7 +3,7 @@ package org.good.job.currency.project.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.good.job.currency.project.dto.deserializers.NbrbCurrencyListDeserializer;
+import org.good.job.currency.project.dto.deserializer.NbrbCurrencyListDeserializer;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import java.util.List;
 public class NationalBankDtoList implements ArrayDto<NationalBankDto> {
 
 
-    private List<NationalBankDto> rates;
+    private List<NationalBankDto> dtoList;
 
     @Override
     public List<NationalBankDto> getListDto() {
-        return rates;
+        return dtoList;
     }
 
 }
