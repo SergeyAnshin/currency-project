@@ -1,0 +1,11 @@
+api:
+  externalApiConfigMap:
+    ALFA_BANK:
+      currencyExternalApiUrl: https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates
+      rateExternalApiUrl: https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates
+    BELARUS_BANK:
+      currencyExternalApiUrl: https://belarusbank.by/api/kurs_cards?kursDate
+      rateExternalApiUrl: https://belarusbank.by/api/kurs_cards?kursDate
+    NATIONAL_BANK:
+      currencyExternalApiUrl: https://api.nbrb.by/exrates/rates?periodicity=0
+      rateExternalApiUrl: https://api.nbrb.by/exrates/rates/{{currencyCode}}?ondate={{date}}&parammode=2

@@ -1,6 +1,7 @@
 package org.good.job.currency.project.dao.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.good.job.currency.project.config.ExternalApiConfigurationProperty;
 import org.good.job.currency.project.dao.CurrencyDao;
 import org.good.job.currency.project.dto.storage.ExternalApiDtoClassesDataStorage;
 import org.good.job.currency.project.entity.GeneralCurrency;
@@ -22,23 +23,28 @@ import java.util.TreeSet;
 @Service
 public class RestTemplateCurrencyDao implements CurrencyDao {
 
+    private final ExternalApiConfigurationProperty externalApiConfigurationProperty;
+    private final ExternalApiUrlService externalApiUrlService;
     private final ExternalApiCaller externalApiCaller;
-    private final ExternalApiUrlService urlService;
-    private final CurrencyMapper currencyMapper;
     private final ExternalApiDtoMapper externalApiDtoMapper;
-    private final ExternalApiDtoClassesDataStorage storage;
+    private final ExternalApiDtoClassesDataStorage externalApiDtoClassesDataStorage;
+    private final CurrencyMapper currencyMapper;
 
     @Override
     public List<GeneralCurrency> findByExternalApiName(ExternalApiName externalApiName) {
-        var param = UserRequestParametersData.builder().externalApiName(externalApiName).build();
-        var externalApiRateUrl = urlService.generateCurrencyUrlByExternalApiName(param);
-        var responseBody = externalApiCaller.call(externalApiRateUrl);
-        var dtoClass = storage.getByExternalApiName(externalApiName).getCurrencyDto();
-        var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
-        var sortedGeneralCurrencies =
-                new TreeSet<>(currencyMapper.currencyDtoListToCurrencyList(externalApiDto).getDtoList());
+
+        var userRequestParameters = UserRequestParametersData.builder().externalApiName(externalApiName).build();
+        var currencyExternalApiUrl = externalApiConfigurationProperty.getExternalApiConfigMap()
+                .get(externalApiName.name())
+                .getCurrencyExternalApiUrl();
+        var currencyExternalApiUrlWithParameters =
+                externalApiUrlService.substituteParametersInUrl(userRequestParameters, currencyExternalApiUrl);
+        var responseBody = externalApiCaller.call(currencyExternalApiUrlWithParameters);
+        var dtoClass = externalApiDtoClassesDataStorage.getByExternalApiName(externalApiName).getCurrencyDto();
+        Object externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
+        TreeSet<GeneralCurrency> sortedGeneralCurrencies = new TreeSet<>(
+                currencyMapper.currencyDtoListToCurrencyList(externalApiDto).getDtoList());
         return new ArrayList<>(sortedGeneralCurrencies);
     }
-
 
 }
