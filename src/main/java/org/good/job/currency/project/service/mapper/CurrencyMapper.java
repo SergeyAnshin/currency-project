@@ -6,8 +6,10 @@ import org.good.job.currency.project.entity.GeneralCurrency;
 import org.mapstruct.Mapper;
 import org.mapstruct.SubclassMapping;
 
+
 @Mapper
 public interface CurrencyMapper {
+
     @SubclassMapping(target = CurrencyList.class, source = NationalBankDtoList.class)
     @SubclassMapping(target = CurrencyList.class, source = AlfaBankDtoList.class)
     @SubclassMapping(target = CurrencyList.class, source = BelarusBankDtoList.class)

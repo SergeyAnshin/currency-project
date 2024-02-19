@@ -28,9 +28,9 @@ public class RestTemplateRateDao implements RateDao {
     private final RequiredExternalApiRateExtractor requiredRateExtractor;
     private final ExternalApiDtoClassesDataStorage storage;
 
-    // TODO move userRequestParameters -> controller
     @Override
-    public Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(UserRequestParametersData userRequestParameters) {
+    public Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(
+            UserRequestParametersData userRequestParameters) {
         var externalApiRateUrl = urlService.generateRateUrlByExternalApiNameAndCurrencyAndDate(userRequestParameters);
         var responseBody = externalApiCaller.call(externalApiRateUrl);
 

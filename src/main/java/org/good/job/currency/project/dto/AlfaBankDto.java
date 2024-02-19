@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 import org.good.job.currency.project.dto.storage.annotation.AssignedExternalApiDto;
 
 import java.time.LocalDate;
-import java.util.Currency;
 import java.util.Objects;
 
 import static org.good.job.currency.project.entity.enums.ExternalApiName.ALFA_BANK;

@@ -7,8 +7,6 @@ import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,27 +18,18 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     private final CurrencyDao currencyDao;
 
-
-    //TODO Вернуть dto
     @Override
-    public List<GeneralCurrency> getAvailableCurrenciesByExternalApiName(ExternalApiName externalApiName) {
-        return currencyDao.findByExternalApiName(externalApiName);
+    public List<String> getAvailableCurrenciesByExternalApiName(ExternalApiName externalApiName) {
+        return currencyDao.findByExternalApiName(externalApiName)
+                .stream()
+                .map(GeneralCurrency::getSellCurrencyCode)
+                .toList();
     }
 
     @Override
     public boolean isCurrencySupportedByExternalApi(ExternalApiName externalApiName, String currencyCode) {
         return getAvailableCurrenciesByExternalApiName(externalApiName).stream()
-                .anyMatch(currency -> Objects.equals(currency.getSellCurrencyCode(), currencyCode));
-    }
-
-
-    // TODO remove ?
-    private List<Currency> convertGeneralCurrencySetToSellCurrencyList(List<GeneralCurrency> sortedGeneralCurrencies) {
-        List<Currency> currencies = new ArrayList<>();
-        for (GeneralCurrency generalCurrency : sortedGeneralCurrencies) {
-            currencies.add(Currency.getInstance(generalCurrency.getSellCurrencyCode()));
-        }
-        return currencies;
+                .anyMatch(currency -> Objects.equals(currency, currencyCode));
     }
 
 }

@@ -3,6 +3,7 @@ package org.good.job.currency.project.controller;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
+import org.good.job.currency.project.dto.enums.ConstCurrency;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
 import org.good.job.currency.project.entity.UserRequestParametersData;
@@ -37,7 +38,7 @@ public class RateController {
         var userRequestParameters = UserRequestParametersData.builder()
                 .externalApiName(externalApiName)
                 .targetCurrencyCode(currencyCode)
-                .localCurrencyCode("BYN")
+                .localCurrencyCode(ConstCurrency.BYN.name())
                 .date(date)
                 .build();
         var rate = rateService.getRateByExternalApiNameAndCurrencyAndDate(userRequestParameters);

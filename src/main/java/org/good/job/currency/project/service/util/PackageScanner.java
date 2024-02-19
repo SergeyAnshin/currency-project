@@ -8,14 +8,15 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
+import static org.good.job.currency.project.entity.enums.ProjectSymbol.BACKSLASH;
+import static org.good.job.currency.project.entity.enums.ProjectSymbol.DOT;
+
 
 public class PackageScanner {
 
     public static final String ROOT_JAVA_PACKAGE_PATH = "src/main/java/";
     public static final String JAVA_FILE_FORMAT = ".java";
     private static final int JAVA_FILE_FORMAT_LENGTH = 5;
-    public static final String BACKSLASH_SYMBOL = "\\\\";
-    public static final String DOT_SYMBOL = ".";
 
     public static List<? extends Class<?>> getAllJavaClassesInPackageMarkedWithAnnotation(String packageStringPath,
                                                                                           Class<? extends Annotation> annotation) {
@@ -52,12 +53,13 @@ public class PackageScanner {
 
     private static String convertPathToClassName(Path classPath) {
         var classPathString = classPath.toString();
-        var pathString = classPathString.substring(ROOT_JAVA_PACKAGE_PATH.length(), classPathString.length() - JAVA_FILE_FORMAT_LENGTH);
+        var pathString = classPathString.substring(ROOT_JAVA_PACKAGE_PATH.length(),
+                                                   classPathString.length() - JAVA_FILE_FORMAT_LENGTH);
         return replacePathSlashesWithDots(pathString);
     }
 
     private static String replacePathSlashesWithDots(String pathString) {
-        return pathString.replaceAll(BACKSLASH_SYMBOL, DOT_SYMBOL);
+        return pathString.replaceAll(BACKSLASH.getSymbol(), DOT.getSymbol());
     }
 
 }

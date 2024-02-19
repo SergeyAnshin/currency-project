@@ -33,10 +33,10 @@ public class RestTemplateCurrencyDao implements CurrencyDao {
         var param = UserRequestParametersData.builder().externalApiName(externalApiName).build();
         var externalApiRateUrl = urlService.generateCurrencyUrlByExternalApiName(param);
         var responseBody = externalApiCaller.call(externalApiRateUrl);
-        Class<?> dtoClass = storage.getByExternalApiName(externalApiName).getCurrencyDto();
-        Object externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
-        TreeSet<GeneralCurrency> sortedGeneralCurrencies = new TreeSet<>(
-                currencyMapper.currencyDtoListToCurrencyList(externalApiDto).getDtoList());
+        var dtoClass = storage.getByExternalApiName(externalApiName).getCurrencyDto();
+        var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
+        var sortedGeneralCurrencies =
+                new TreeSet<>(currencyMapper.currencyDtoListToCurrencyList(externalApiDto).getDtoList());
         return new ArrayList<>(sortedGeneralCurrencies);
     }
 

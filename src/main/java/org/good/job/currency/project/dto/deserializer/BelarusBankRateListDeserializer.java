@@ -18,7 +18,6 @@ import java.util.List;
 @Component
 public class BelarusBankRateListDeserializer extends JsonDeserializer<BelarusBankDtoList> {
 
-
     @Override
     public BelarusBankDtoList deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         var treeNode = p.readValueAsTree();

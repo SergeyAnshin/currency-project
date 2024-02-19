@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
@@ -27,10 +26,10 @@ class SupportedCurrencyCodeValidatorTest {
     @Test
     void returnFalseIfCurrencyIncorrect() {
         assertAll(() -> {
-            assertTrue(currencyCodeValidator.isValid("als", null));
-            assertTrue(currencyCodeValidator.isValid("GKK", null));
-            assertTrue(currencyCodeValidator.isValid("1", null));
-            assertTrue(currencyCodeValidator.isValid("adal11", null));
+            assertFalse(currencyCodeValidator.isValid("als", null));
+            assertFalse(currencyCodeValidator.isValid("GKK", null));
+            assertFalse(currencyCodeValidator.isValid("1", null));
+            assertFalse(currencyCodeValidator.isValid("adal11", null));
         });
     }
 
