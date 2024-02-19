@@ -2,6 +2,7 @@ package org.good.job.currency.project.entity;
 
 import lombok.*;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
+import org.good.job.currency.project.service.annotation.UrlParameter;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -15,9 +16,13 @@ import java.util.Objects;
 @ToString
 public class UserRequestParametersData {
 
+    @UrlParameter(name = "externalApiName")
     private ExternalApiName externalApiName;
+    @UrlParameter(name = "currencyCode")
     private String targetCurrencyCode;
+    @UrlParameter(name = "localCurrencyCode")
     private String localCurrencyCode;
+    @UrlParameter(name = "date")
     private LocalDate date;
 
     @Override

@@ -1,6 +1,7 @@
 package org.good.job.currency.project.dao.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.good.job.currency.project.config.ExternalApiConfigurationProperty;
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.dto.ArrayDto;
 import org.good.job.currency.project.dto.storage.ExternalApiDtoClassesDataStorage;
@@ -21,24 +22,29 @@ import java.util.Optional;
 @Service
 public class RestTemplateRateDao implements RateDao {
 
+    private final ExternalApiConfigurationProperty externalApiConfigurationProperty;
+    private final ExternalApiUrlService externalApiUrlService;
     private final ExternalApiCaller externalApiCaller;
-    private final ExternalApiUrlService urlService;
-    private final RateMapper rateMapper;
     private final ExternalApiDtoMapper externalApiDtoMapper;
+    private final RateMapper rateMapper;
     private final RequiredExternalApiRateExtractor requiredRateExtractor;
-    private final ExternalApiDtoClassesDataStorage storage;
+    private final ExternalApiDtoClassesDataStorage externalApiDtoClassesDataStorage;
+
 
     @Override
     public Optional<GeneralRate> findByExternalApiNameAndCurrencyCodeAndDate(
             UserRequestParametersData userRequestParameters) {
-        var externalApiRateUrl = urlService.generateRateUrlByExternalApiNameAndCurrencyAndDate(userRequestParameters);
-        var responseBody = externalApiCaller.call(externalApiRateUrl);
-
-        var dtoClass = storage.getByExternalApiName(userRequestParameters.getExternalApiName()).getRateDto();
+        var rateExternalApiUrl = externalApiConfigurationProperty.getExternalApiConfigMap()
+                .get(userRequestParameters.getExternalApiName().name())
+                .getRateExternalApiUrl();
+        var externalApiRateUrlWithParameters =
+                externalApiUrlService.substituteParametersInUrl(userRequestParameters, rateExternalApiUrl);
+        var responseBody = externalApiCaller.call(externalApiRateUrlWithParameters);
+        var dtoClass = externalApiDtoClassesDataStorage.getByExternalApiName(userRequestParameters.getExternalApiName())
+                .getRateDto();
         var externalApiDto = externalApiDtoMapper.responseBodyToExternalApiDto(responseBody, dtoClass);
         externalApiDto =
                 extractRequiredExternalApiRateIfRateRepresentingJsonArray(externalApiDto, userRequestParameters);
-
         return Optional.of(rateMapper.externalApiRateDtoToRate(externalApiDto, userRequestParameters));
     }
 
