@@ -13,5 +13,6 @@ public class ExternalApiDtoClassesData {
 
     private Class<?> rateDto;
     private Class<?> currencyDto;
+    private Class<?> ratesByPeriodDto;
 
 }
