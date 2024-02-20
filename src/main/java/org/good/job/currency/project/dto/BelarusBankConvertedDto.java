@@ -19,7 +19,7 @@ import static org.good.job.currency.project.entity.enums.ExternalApiName.BELARUS
 @Data
 
 @AssignedExternalApiDto(externalApi = BELARUS_BANK, currencyDto = BelarusBankDtoList.class,
-        rateDto = BelarusBankDtoList.class)
+        rateDto = BelarusBankDtoList.class, ratesByPeriodDto = BelarusBankDtoList.class)
 public class BelarusBankConvertedDto extends GeneralExternalApiDto implements Checkable {
 
     private LocalDateTime date;
@@ -27,6 +27,11 @@ public class BelarusBankConvertedDto extends GeneralExternalApiDto implements Ch
     private final String buyCurrencyCode = ConstCurrency.BYN.toString();
     private double sellRate;
     private double buyRate;
+
+    @Override
+    public int getSellCurrencyCodeId() {
+        return 0;
+    }
 
     @Override
     public String getSellCurrencyCode() {

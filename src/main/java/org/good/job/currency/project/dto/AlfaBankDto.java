@@ -19,7 +19,8 @@ import static org.good.job.currency.project.entity.enums.ExternalApiName.ALFA_BA
 @Setter
 @ToString
 
-@AssignedExternalApiDto(externalApi = ALFA_BANK, currencyDto = AlfaBankDtoList.class, rateDto = AlfaBankDtoList.class)
+@AssignedExternalApiDto(externalApi = ALFA_BANK, currencyDto = AlfaBankDtoList.class, rateDto = AlfaBankDtoList.class,
+        ratesByPeriodDto = AlfaBankDtoList.class)
 public class AlfaBankDto extends GeneralExternalApiDto implements Checkable {
 
     private double sellRate;
@@ -34,6 +35,11 @@ public class AlfaBankDto extends GeneralExternalApiDto implements Checkable {
     private String name;
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate date;
+
+    @Override
+    public int getSellCurrencyCodeId() {
+        return sellCode;
+    }
 
     @Override
     public String getSellCurrencyCode() {

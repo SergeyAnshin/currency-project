@@ -22,11 +22,11 @@ import static org.good.job.currency.project.entity.enums.ExternalApiName.NATIONA
 @ToString
 
 @AssignedExternalApiDto(externalApi = NATIONAL_BANK, currencyDto = NationalBankDtoList.class,
-        rateDto = NationalBankDto.class)
+        rateDto = NationalBankDto.class, ratesByPeriodDto = NationalBankDtoList.class)
 public class NationalBankDto extends GeneralExternalApiDto implements Checkable {
 
     @JsonAlias({ "Cur_ID" })
-    private long currencyId;
+    private int currencyId;
 
     @JsonAlias({ "Date" })
     private LocalDateTime date;
@@ -42,6 +42,11 @@ public class NationalBankDto extends GeneralExternalApiDto implements Checkable 
 
     @JsonAlias({ "Cur_OfficialRate" })
     private double sellRate;
+
+    @Override
+    public int getSellCurrencyCodeId() {
+        return currencyId;
+    }
 
     @Override
     public String getSellCurrencyCode() {
