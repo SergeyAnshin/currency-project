@@ -12,5 +12,6 @@ public class ExternalApiConfig {
     // TODO найти аннотации для маппинга с ямл файлом
     String currencyExternalApiUrl;
     String rateExternalApiUrl;
+    String ratesByPeriodExternalApiUrl;
 
 }

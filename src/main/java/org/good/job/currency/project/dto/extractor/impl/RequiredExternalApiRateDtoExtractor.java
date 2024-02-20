@@ -1,9 +1,10 @@
-package org.good.job.currency.project.service.impl;
+package org.good.job.currency.project.dto.extractor.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dto.ArrayDto;
+import org.good.job.currency.project.dto.extractor.CheckStrategy;
+import org.good.job.currency.project.dto.extractor.RequiredExternalApiDtoExtractor;
 import org.good.job.currency.project.entity.UserRequestParametersData;
-import org.good.job.currency.project.service.RequiredExternalApiRateExtractor;
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,24 +14,21 @@ import java.util.ArrayDeque;
 @RequiredArgsConstructor
 
 @Service
-public class RateRequiredExternalApiRateExtractor implements RequiredExternalApiRateExtractor {
-
-    private final RateCheckFactory rateCheckFactory;
+public class RequiredExternalApiRateDtoExtractor implements RequiredExternalApiDtoExtractor {
 
     @Override
-    public Object extractFromRateList(ArrayDto<?> externalApiRateDto, UserRequestParametersData userRequestParameters) {
+    public ArrayDeque<Object> extract(ArrayDto<?> externalApiRateDto, UserRequestParametersData userRequestParameters,
+                                      CheckStrategy checkStrategy) {
         var ratesMatchingSpecifiedParameters = new ArrayDeque<>();
         for (var rate : externalApiRateDto.getListDto()) {
-            var rateChecker = rateCheckFactory.getRateCheckerByRateDtoClass(rate.getClass());
-            if (rateChecker.isRateMatchParameters(rate, userRequestParameters)) {
+            if (checkStrategy.isRateMatchParameters(rate, userRequestParameters)) {
                 ratesMatchingSpecifiedParameters.addFirst(rate);
             }
         }
         if (ratesMatchingSpecifiedParameters.isEmpty()) {
             throw new RateNotFoundException();
         }
-        // TODO придумать выборку по времени
-        return ratesMatchingSpecifiedParameters.getFirst();
+        return ratesMatchingSpecifiedParameters;
     }
 
 }

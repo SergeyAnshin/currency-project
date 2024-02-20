@@ -1,5 +1,6 @@
 package org.good.job.currency.project.controller;
 
+
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class RateController {
 
     private final RateService rateService;
 
-    @GetMapping
+    @GetMapping(params = { "externalApiName", "currencyCode", "date" })
     public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam ExternalApiName externalApiName,
                                                                         @RequestParam @SupportedCurrencyCode
                                                                         String currencyCode,
@@ -45,13 +47,37 @@ public class RateController {
         return ResponseEntity.ok(rate);
     }
 
+    @GetMapping(params = { "externalApiName", "currencyCode", "startDate", "endDate" })
+    public ResponseEntity<List<GeneralRate>> getCurrencyRatesByPeriod(@RequestParam ExternalApiName externalApiName,
+                                                                      @RequestParam @SupportedCurrencyCode
+                                                                      String currencyCode,
+                                                                      @RequestParam @Past LocalDate startDate,
+                                                                      @RequestParam @PastOrPresent LocalDate endDate) {
+        var userRequestParameters = UserRequestParametersData.builder()
+                .externalApiName(externalApiName)
+                .targetCurrencyCode(currencyCode)
+                .localCurrencyCode(ConstCurrency.BYN.name())
+                .periodStartDate(startDate)
+                .periodEndDate(endDate)
+                .build();
+        var ratesByPeriod = rateService.getCurrencyRatesByPeriod(userRequestParameters);
+        return ResponseEntity.ok(ratesByPeriod);
+    }
+
     @GetMapping("/statistics")
     public ResponseEntity<RateStatisticData> getCurrencyRateStatistics(@RequestParam ExternalApiName externalApiName,
                                                                        @RequestParam @SupportedCurrencyCode
                                                                        String currencyCode,
                                                                        @RequestParam @Past LocalDate startDate,
                                                                        @RequestParam @PastOrPresent LocalDate endDate) {
-        var rateStatistics = rateService.getStatistics(externalApiName, currencyCode, startDate, endDate);
+        var userRequestParameters = UserRequestParametersData.builder()
+                .externalApiName(externalApiName)
+                .targetCurrencyCode(currencyCode)
+                .localCurrencyCode(ConstCurrency.BYN.name())
+                .periodStartDate(startDate)
+                .periodEndDate(endDate)
+                .build();
+        var rateStatistics = rateService.getStatistics(userRequestParameters);
         return ResponseEntity.ok(rateStatistics);
     }
 

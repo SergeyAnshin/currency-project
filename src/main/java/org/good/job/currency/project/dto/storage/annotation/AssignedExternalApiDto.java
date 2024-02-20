@@ -15,4 +15,6 @@ public @interface AssignedExternalApiDto {
 
     Class<?> currencyDto();
 
+    Class<?> ratesByPeriodDto();
+
 }

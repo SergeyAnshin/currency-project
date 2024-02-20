@@ -5,7 +5,6 @@ import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
 import org.good.job.currency.project.entity.UserRequestParametersData;
-import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.RateService;
 import org.good.job.currency.project.service.StatisticService;
@@ -13,7 +12,6 @@ import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExt
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
@@ -39,19 +37,21 @@ public class RateServiceImpl implements RateService {
     }
 
     @Override
-    public RateStatisticData getStatistics(ExternalApiName externalApiName, String currencyCode, LocalDate startDate,
-                                           LocalDate endDate) {
-        var generalRates =
-                getRateByExternalApiNameAndCurrencyAndDateRange(externalApiName, currencyCode, startDate, endDate);
-        return statisticService.getStatistics(generalRates);
-
+    public List<GeneralRate> getCurrencyRatesByPeriod(UserRequestParametersData userRequestParameters) {
+        var externalApiName = userRequestParameters.getExternalApiName();
+        var targetCurrencyCode = userRequestParameters.getTargetCurrencyCode();
+        if (currencyService.isCurrencySupportedByExternalApi(externalApiName, targetCurrencyCode)) {
+            return rateDao.findByExternalApiNameAndCurrencyCodeAndPeriod(userRequestParameters);
+        } else {
+            throw new CurrencyNotSupportedByExternalApiException();
+        }
     }
 
     @Override
-    public List<GeneralRate> getRateByExternalApiNameAndCurrencyAndDateRange(ExternalApiName externalApiName,
-                                                                             String currencyCode, LocalDate startDate,
-                                                                             LocalDate endDate) {
-        return null;
+    public RateStatisticData getStatistics(UserRequestParametersData userRequestParameters) {
+        var generalRates = getCurrencyRatesByPeriod(userRequestParameters);
+        return statisticService.getStatistics(generalRates);
+
     }
 
 }

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 public interface Checkable {
 
+    int getSellCurrencyCodeId();
+
     String getSellCurrencyCode();
 
     String getBuyCurrencyCode();

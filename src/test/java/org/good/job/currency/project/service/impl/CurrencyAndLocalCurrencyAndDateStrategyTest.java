@@ -1,7 +1,7 @@
 package org.good.job.currency.project.service.impl;
 
 import org.good.job.currency.project.dto.AlfaBankDto;
-import org.good.job.currency.project.entity.GeneralRate;
+import org.good.job.currency.project.dto.extractor.impl.CurrencyAndLocalCurrencyAndDateStrategy;
 import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,10 +14,10 @@ import static org.good.job.currency.project.entity.enums.ExternalApiName.ALFA_BA
 
 
 @SpringBootTest
-class AlfaBankRateCheckerTest {
+class CurrencyAndLocalCurrencyAndDateStrategyTest {
 
     @Autowired
-    private AlfaBankRateChecker rateChecker;
+    private CurrencyAndLocalCurrencyAndDateStrategy strategy;
 
     @Test
     void isRateMatchParametersReturnFalseIfCurrencyCodesNotMatch() {
@@ -45,7 +45,7 @@ class AlfaBankRateCheckerTest {
                 .date(currentDate)
                 .build();
 
-        Assertions.assertFalse(rateChecker.isRateMatchParameters(alfaBankDto, userRequestParameters));
+        Assertions.assertFalse(strategy.isRateMatchParameters(alfaBankDto, userRequestParameters));
     }
 
 
@@ -75,7 +75,7 @@ class AlfaBankRateCheckerTest {
                 .date(currentDate)
                 .build();
 
-        Assertions.assertTrue(rateChecker.isRateMatchParameters(alfaBankDto, userRequestParameters));
+        Assertions.assertTrue(strategy.isRateMatchParameters(alfaBankDto, userRequestParameters));
     }
 
     @Test
@@ -104,7 +104,7 @@ class AlfaBankRateCheckerTest {
                 .date(currentDate)
                 .build();
 
-        Assertions.assertTrue(rateChecker.isRateMatchParameters(alfaBankDto, userRequestParameters));
+        Assertions.assertTrue(strategy.isRateMatchParameters(alfaBankDto, userRequestParameters));
     }
 
     @Test
@@ -133,7 +133,7 @@ class AlfaBankRateCheckerTest {
                 .date(currentDate)
                 .build();
 
-        Assertions.assertFalse(rateChecker.isRateMatchParameters(alfaBankDto, userRequestParameters));
+        Assertions.assertFalse(strategy.isRateMatchParameters(alfaBankDto, userRequestParameters));
     }
 
     @Test
@@ -162,9 +162,8 @@ class AlfaBankRateCheckerTest {
                 .date(currentDate)
                 .build();
 
-        Assertions.assertFalse(rateChecker.isRateMatchParameters(alfaBankDto, userRequestParameters));
+        Assertions.assertFalse(strategy.isRateMatchParameters(alfaBankDto, userRequestParameters));
     }
-
 
 
 }

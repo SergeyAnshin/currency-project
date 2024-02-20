@@ -2,7 +2,6 @@ package org.good.job.currency.project.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringSubstitutor;
-import org.good.job.currency.project.config.ExternalApiConfigurationProperty;
 import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.service.ExternalApiUrlService;
 import org.good.job.currency.project.service.annotation.UrlParameter;
@@ -12,9 +11,12 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.Objects.nonNull;
+import static org.good.job.currency.project.entity.enums.ExternalApiName.NATIONAL_BANK;
+import static org.good.job.currency.project.entity.enums.ExternalApiName.getExternalCurrencyId;
 
 
 @RequiredArgsConstructor
@@ -22,11 +24,7 @@ import static java.util.Objects.nonNull;
 @Service
 public class ExternalApiUrlServiceImpl implements ExternalApiUrlService {
 
-
     public static final String GETTER_PREFIX = "get";
-
-    private final ExternalApiConfigurationProperty externalApiConfigurationProperty;
-
 
     @Override
     public String substituteParametersInUrl(UserRequestParametersData userRequestParameters, String externalApiUrl) {
@@ -34,7 +32,6 @@ public class ExternalApiUrlServiceImpl implements ExternalApiUrlService {
         if (parametersMap.isEmpty()) return externalApiUrl;
         return StringSubstitutor.replace(externalApiUrl, parametersMap, "{{", "}}");
     }
-
 
     private HashMap<String, String> getParametersMapForUrlConfig(UserRequestParametersData userRequestParameters) {
         var urlParametersClass = userRequestParameters.getClass();
@@ -46,10 +43,22 @@ public class ExternalApiUrlServiceImpl implements ExternalApiUrlService {
             var urlParameterName = annotationWithUrlParameterName.name();
             var getterMethodName = GETTER_PREFIX + StringUtils.capitalize(field.getName());
             var method = getMethodByName(urlParametersClass, getterMethodName);
-            var parameterValue = extractParameterValue(method, userRequestParameters);
+            var parameterValue = extractParameterValue(method, userRequestParameters).map(
+                    targetCurrencyCode -> replaceCurrencyCodeWithCurrencyIdIfExternalApiNotSupport(
+                            userRequestParameters, targetCurrencyCode));
             parameterValue.ifPresent(value -> urlParametersWithValues.put(urlParameterName, value));
         }
         return urlParametersWithValues;
+    }
+
+    private String replaceCurrencyCodeWithCurrencyIdIfExternalApiNotSupport(UserRequestParametersData userRequestParameters,
+                                                                            String targetCurrencyCode) {
+        if (Objects.equals(userRequestParameters.getTargetCurrencyCode(), targetCurrencyCode)) {
+            if (userRequestParameters.getExternalApiName().equals(NATIONAL_BANK)) {
+                return getExternalCurrencyId(NATIONAL_BANK, targetCurrencyCode).toString();
+            }
+        }
+        return targetCurrencyCode;
     }
 
     private Method getMethodByName(Class<? extends UserRequestParametersData> paramClass, String getterMethodName) {

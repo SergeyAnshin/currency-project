@@ -15,6 +15,7 @@ public class ExternalApiAnnotatedDtoClassesDataCreator
         return ExternalApiDtoClassesData.builder()
                 .rateDto(annotation.rateDto())
                 .currencyDto(annotation.currencyDto())
+                .ratesByPeriodDto(annotation.ratesByPeriodDto())
                 .build();
     }
 
