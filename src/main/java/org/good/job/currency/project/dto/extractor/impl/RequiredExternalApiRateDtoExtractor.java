@@ -1,9 +1,9 @@
 package org.good.job.currency.project.dto.extractor.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.good.job.currency.project.dto.ArrayDto;
 import org.good.job.currency.project.dto.extractor.CheckStrategy;
 import org.good.job.currency.project.dto.extractor.RequiredExternalApiDtoExtractor;
+import org.good.job.currency.project.dto.ArrayDto;
 import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;

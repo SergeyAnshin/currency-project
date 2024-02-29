@@ -3,8 +3,8 @@ package org.good.job.currency.project.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringSubstitutor;
 import org.good.job.currency.project.entity.UserRequestParametersData;
-import org.good.job.currency.project.service.ExternalApiUrlService;
 import org.good.job.currency.project.service.annotation.UrlParameter;
+import org.good.job.currency.project.service.ExternalApiUrlService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 

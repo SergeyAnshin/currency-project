@@ -25,7 +25,16 @@ public enum ExternalApiName {
     public static boolean isExternalApiNameExist(String externalApiName) {
         return Arrays.stream(values())
                 .map(ExternalApiName::toString)
-                .anyMatch(Predicate.isEqual(externalApiName.toUpperCase()));
+                .anyMatch(Predicate.isEqual(convertToUpperSnakeCase(externalApiName)));
+    }
+
+    private static String convertToUpperSnakeCase(String externalApiName) {
+        return externalApiName.replaceAll(ProjectSymbol.WHITESPACE.getSymbol(), ProjectSymbol.UNDERSCORE.getSymbol())
+                .toUpperCase();
+    }
+
+    public static ExternalApiName transformStringToEnum(String externalApiName) {
+        return ExternalApiName.valueOf(convertToUpperSnakeCase(externalApiName));
     }
 
     public static Integer getExternalCurrencyId(ExternalApiName externalApiName, String currencyCode) {
