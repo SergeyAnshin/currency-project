@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <telegrambot.version>6.8.0</telegrambot.version>
+        <jfreechart.version>1.0.13</jfreechart.version>
     </properties>
     <dependencies>
         <dependency>
@@ -62,6 +63,13 @@
             <artifactId>telegrambots</artifactId>
             <version>${telegrambot.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>${jfreechart.version}</version>
+        </dependency>
+
 
     </dependencies>
 

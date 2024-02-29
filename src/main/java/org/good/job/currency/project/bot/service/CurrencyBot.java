@@ -9,10 +9,14 @@ import org.good.job.currency.project.bot.model.enums.UserStep;
 import org.good.job.currency.project.bot.service.action.ActionFactory;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import static jdk.dynalink.linker.support.Guards.isNull;
 
 
 @RequiredArgsConstructor
@@ -38,7 +42,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
                 userDao.getUserStateHashMap().put(chatId, new UserState(UserStep.START));
             }
             UserState currentUserState = userDao.getUserStateHashMap().get(chatId);
-            SendMessage messageToHandle =
+            PartialBotApiMethod messageToHandle =
                     actionFactory.getAction(currentUserState.getCurrentStep()).handle(update);
 
             executeMethod(messageToHandle);
@@ -57,9 +61,10 @@ public class CurrencyBot extends TelegramLongPollingBot {
         return currencyBotConfig.getBotToken();
     }
 
-    public void executeMethod(SendMessage toHandle) {
+    public void executeMethod(PartialBotApiMethod toHandle) {
         try {
-            execute(toHandle);
+            if (toHandle instanceof SendPhoto photo) execute(photo);
+            if (toHandle instanceof SendMessage message) execute(message);
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
