@@ -11,6 +11,7 @@ import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.RateService;
 import org.good.job.currency.project.service.validation.annotation.SupportedCurrencyCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,13 +33,16 @@ public class RateController {
 
     private final RateService rateService;
 
-    @GetMapping(params = { "externalApiName", "currencyCode", "date" })
-    public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam ExternalApiName externalApiName,
+    @GetMapping
+    public ResponseEntity<GeneralRate> getExternalApiCurrencyRateByDate(@RequestParam String externalApiName,
                                                                         @RequestParam @SupportedCurrencyCode
                                                                         String currencyCode,
                                                                         @RequestParam @PastOrPresent LocalDate date) {
+        if (!ExternalApiName.isExternalApiNameExist(externalApiName)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         var userRequestParameters = UserRequestParametersData.builder()
-                .externalApiName(externalApiName)
+                .externalApiName(ExternalApiName.transformStringToEnum(externalApiName))
                 .targetCurrencyCode(currencyCode)
                 .localCurrencyCode(ConstCurrency.BYN.name())
                 .date(date)
@@ -65,13 +69,16 @@ public class RateController {
     }
 
     @GetMapping("/statistics")
-    public ResponseEntity<RateStatisticData> getCurrencyRateStatistics(@RequestParam ExternalApiName externalApiName,
+    public ResponseEntity<RateStatisticData> getCurrencyRateStatistics(@RequestParam String externalApiName,
                                                                        @RequestParam @SupportedCurrencyCode
                                                                        String currencyCode,
                                                                        @RequestParam @Past LocalDate startDate,
                                                                        @RequestParam @PastOrPresent LocalDate endDate) {
+        if (!ExternalApiName.isExternalApiNameExist(externalApiName)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         var userRequestParameters = UserRequestParametersData.builder()
-                .externalApiName(externalApiName)
+                .externalApiName(ExternalApiName.transformStringToEnum(externalApiName))
                 .targetCurrencyCode(currencyCode)
                 .localCurrencyCode(ConstCurrency.BYN.name())
                 .periodStartDate(startDate)

@@ -1,8 +1,8 @@
 package org.good.job.currency.project.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.good.job.currency.project.service.ExternalApiCaller;
 import org.good.job.currency.project.service.exception.ExternalApiProblemException;
+import org.good.job.currency.project.service.ExternalApiCaller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

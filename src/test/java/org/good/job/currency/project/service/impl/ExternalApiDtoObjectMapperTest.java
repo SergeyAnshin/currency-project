@@ -1,7 +1,5 @@
 package org.good.job.currency.project.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.good.job.currency.project.dto.AlfaBankDto;
 import org.good.job.currency.project.dto.AlfaBankDtoList;
 import org.junit.jupiter.api.Test;

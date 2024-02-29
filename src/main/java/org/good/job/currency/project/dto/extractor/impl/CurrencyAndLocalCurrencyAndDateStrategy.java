@@ -1,8 +1,8 @@
 package org.good.job.currency.project.dto.extractor.impl;
 
+import org.good.job.currency.project.dto.extractor.CheckStrategy;
 import org.good.job.currency.project.dto.Checkable;
 import org.good.job.currency.project.dto.GeneralExternalApiDto;
-import org.good.job.currency.project.dto.extractor.CheckStrategy;
 import org.good.job.currency.project.entity.UserRequestParametersData;
 import org.springframework.stereotype.Component;
 

@@ -3,7 +3,6 @@ package org.good.job.currency.project.service.impl;
 import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.UserRequestParametersData;
-import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
 import org.good.job.currency.project.service.exception.RateNotFoundException;
@@ -14,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.Currency;
 import java.util.Optional;
 
 import static org.good.job.currency.project.entity.enums.ExternalApiName.ALFA_BANK;

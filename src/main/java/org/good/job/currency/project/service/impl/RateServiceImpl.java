@@ -5,11 +5,11 @@ import org.good.job.currency.project.dao.RateDao;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
 import org.good.job.currency.project.entity.UserRequestParametersData;
+import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
+import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.good.job.currency.project.service.CurrencyService;
 import org.good.job.currency.project.service.RateService;
 import org.good.job.currency.project.service.StatisticService;
-import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
-import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
