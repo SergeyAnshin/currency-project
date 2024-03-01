@@ -1,0 +1,10 @@
+spring:
+  messages:
+    basename: ExternalApi
+
+app:
+  root-dto-package-path: src/main/java/org/good/job/currency/project/dto
+
+bot:
+  name: ${BOT_NAME}
+  token: ${BOT_TOKEN}
