@@ -50,5 +50,5 @@ To start the project you need:
 
 ### Specific steps
 
-To launch a Telegram bot, you need to know its name and token. This data is stored in **application.yml**. To install them, you must create the following environment variables: BOT_NAME and BOT_TOKEN. These environment variables will be used by the application to identify and authorize the bot to the Telegram API. Make sure they are set correctly before launching the bot.
+To launch a Telegram bot, you need to know its name and token. This data is stored in **application.yml**. To install them, you must create the following environment variables: **BOT_NAME** and **BOT_TOKEN**. These environment variables will be used by the application to identify and authorize the bot to the Telegram API. Make sure they are set correctly before launching the bot.
 
