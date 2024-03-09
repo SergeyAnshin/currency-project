@@ -2,9 +2,11 @@ package org.good.job.currency.project.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.good.job.currency.project.dao.RateDao;
+import org.good.job.currency.project.dto.UserRequestParameters;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
 import org.good.job.currency.project.entity.UserRequestParametersData;
+import org.good.job.currency.project.entity.enums.ExternalApiName;
 import org.good.job.currency.project.service.exception.CurrencyNotSupportedByExternalApiException;
 import org.good.job.currency.project.service.exception.RateNotFoundException;
 import org.good.job.currency.project.service.CurrencyService;
@@ -47,9 +49,18 @@ public class RateServiceImpl implements RateService {
         }
     }
 
+    // TODO заменить userRequestParametersData
     @Override
-    public RateStatisticData getStatistics(UserRequestParametersData userRequestParameters) {
-        var generalRates = getCurrencyRatesByPeriod(userRequestParameters);
+    public RateStatisticData getStatistics(UserRequestParameters userRequestParameters) {
+        UserRequestParametersData userRequestParametersData = UserRequestParametersData.builder()
+                .externalApiName(
+                        ExternalApiName.valueOf(userRequestParameters.getExternalApiName()))
+                .targetCurrencyCode(userRequestParameters.getTargetCurrencyCode())
+                .localCurrencyCode(userRequestParameters.getLocalCurrencyCode())
+                .periodStartDate(userRequestParameters.getPeriodStartDate())
+                .periodEndDate(userRequestParameters.getPeriodEndDate())
+                .build();
+        List<GeneralRate> generalRates = getCurrencyRatesByPeriod(userRequestParametersData);
         return statisticService.getStatistics(generalRates);
 
     }

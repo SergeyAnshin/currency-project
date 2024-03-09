@@ -1,5 +1,6 @@
 package org.good.job.currency.project.service;
 
+import org.good.job.currency.project.dto.UserRequestParameters;
 import org.good.job.currency.project.entity.GeneralRate;
 import org.good.job.currency.project.entity.RateStatisticData;
 import org.good.job.currency.project.entity.UserRequestParametersData;
@@ -13,6 +14,6 @@ public interface RateService {
 
     List<GeneralRate> getCurrencyRatesByPeriod(UserRequestParametersData userRequestParameters);
 
-    RateStatisticData getStatistics(UserRequestParametersData userRequestParameters);
+    RateStatisticData getStatistics(UserRequestParameters userRequestParameters);
 
 }

@@ -15,17 +15,17 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public RateStatisticData getStatistics(List<GeneralRate> generalRates) {
-        var avgBuyRate = RateStatisticMath.getAvgRate(generalRates, GeneralRate::getBuyRate);
-        var avgSellRate = RateStatisticMath.getAvgRate(generalRates, GeneralRate::getSellRate);
+        double avgBuyRate = RateStatisticMath.getAvgRate(generalRates, GeneralRate::getBuyRate);
+        double avgSellRate = RateStatisticMath.getAvgRate(generalRates, GeneralRate::getSellRate);
 
-        var minBuyRate = RateStatisticMath.getMinRate(generalRates, GeneralRate::getBuyRate);
-        var minSellRate = RateStatisticMath.getMinRate(generalRates, GeneralRate::getSellRate);
+        double minBuyRate = RateStatisticMath.getMinRate(generalRates, GeneralRate::getBuyRate);
+        double minSellRate = RateStatisticMath.getMinRate(generalRates, GeneralRate::getSellRate);
 
-        var maxBuyRate = RateStatisticMath.getMaxRate(generalRates, GeneralRate::getBuyRate);
-        var maxSellRate = RateStatisticMath.getMaxRate(generalRates, GeneralRate::getSellRate);
+        double maxBuyRate = RateStatisticMath.getMaxRate(generalRates, GeneralRate::getBuyRate);
+        double maxSellRate = RateStatisticMath.getMaxRate(generalRates, GeneralRate::getSellRate);
 
-        var buyRateByDate = RateStatisticMath.getRateByDateArray(generalRates, GeneralRate::getBuyRate);
-        var sellRateByDate = RateStatisticMath.getRateByDateArray(generalRates, GeneralRate::getSellRate);
+        List<List<Object>> buyRateByDate = RateStatisticMath.getRateByDateArray(generalRates, GeneralRate::getBuyRate);
+        List<List<Object>> sellRateByDate = RateStatisticMath.getRateByDateArray(generalRates, GeneralRate::getSellRate);
 
         return RateStatisticData.builder()
                 .avgBuyRate(avgBuyRate)

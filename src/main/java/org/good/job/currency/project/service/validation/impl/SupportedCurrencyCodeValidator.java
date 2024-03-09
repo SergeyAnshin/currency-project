@@ -1,4 +1,4 @@
-package org.good.job.currency.project.service.validation;
+package org.good.job.currency.project.service.validation.impl;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

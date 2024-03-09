@@ -1,5 +1,6 @@
 package org.good.job.currency.project.service.validation;
 
+import org.good.job.currency.project.service.validation.impl.SupportedCurrencyCodeValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

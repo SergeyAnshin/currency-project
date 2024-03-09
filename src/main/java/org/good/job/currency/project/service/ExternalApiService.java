@@ -7,4 +7,6 @@ public interface ExternalApiService {
 
     List<String> getAvailableExternalApis();
 
+    boolean isExistsByName(String externalApiName);
+
 }
